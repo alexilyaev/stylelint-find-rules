@@ -1,0 +1,21 @@
+# Based on:
+# https://github.com/h5bp/html5-boilerplate/blob/master/.gitattributes
+# http://adaptivepatchwork.com/2012/03/01/mind-the-end-of-your-line/
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# For the following file types, normalize line endings to LF on
+# checkin and prevent conversion to CRLF when they are checked out
+# (this is required in order to prevent newline related issues like,
+# for example, after the build script is run)
+.*      text eol=lf
+*.css   text eol=lf
+*.html  text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.sh    text eol=lf
+*.txt   text eol=lf
+*.xml   text eol=lf
+*.map   text eol=lf

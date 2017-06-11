@@ -1,0 +1,35 @@
+{
+  "name": "stylelint-find-rules",
+  "version": "0.0.0",
+  "description": "Find Stylelint rules that you don't have in your config",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format-prettier": "prettier --print-width 100 --single-quote --write \"*.js\"",
+    "lint-prettier": "prettier -l --print-width 100 --single-quote \"*.js\"",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "format-prettier",
+      "git add"
+    ]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^0.13.4",
+    "lint-staged": "^3.6.1",
+    "prettier": "1.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexilyaev/stylelint-find-rules.git"
+  },
+  "keywords": [],
+  "author": "Alex Ilyaev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexilyaev/stylelint-find-rules/issues"
+  },
+  "homepage": "https://github.com/alexilyaev/stylelint-find-rules#readme"
+}
