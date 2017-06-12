@@ -1,6 +1,10 @@
 stylelint-find-rules
 ======================
 
+[![version](https://img.shields.io/npm/v/stylelint-find-rules.svg?style=flat-square)](http://npm.im/stylelint-find-rules)
+[![MIT License](https://img.shields.io/npm/l/stylelint-find-rules.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 Find [Stylelint](https://github.com/stylelint/stylelint) rules that are not configured in your Stylelint config.
 
 > Inspired by [eslint-find-rules](https://github.com/sarbbottam/eslint-find-rules)
