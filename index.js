@@ -2,19 +2,35 @@
 'use strict';
 
 const fs = require('fs');
-const rc = require('rc');
+const cosmiconfig = require('cosmiconfig');
 const path = require('path');
 const readline = require('readline');
 const columnify = require('columnify');
 const difference = require('lodash.difference');
 const stylelintRules = require('stylelint/lib/rules/index');
 
-const userConfig = rc('stylelint');
+function handleError(err) {
+  throw err;
+}
 
-const userRulesNames = Object.keys(userConfig.rules);
-const stylelintRulesNames = Object.keys(stylelintRules);
+function findUnconfiguredRules(userConfig) {
+  const userRulesNames = Object.keys(userConfig);
+  const stylelintRulesNames = Object.keys(stylelintRules);
 
-const diff = difference(stylelintRulesNames, userRulesNames);
+  return difference(stylelintRulesNames, userRulesNames);
+}
+
+function buildResults(diff) {
+  return diff.map(rule => {
+    return isDDeprecated(rule).then(deprecated => {
+      return {
+        name: rule,
+        url: `https://stylelint.io/user-guide/rules/${rule}/`,
+        deprecated: deprecated ? 'yes' : ''
+      };
+    });
+  });
+}
 
 function isDDeprecated(ruleName, cb) {
   const target = `stylelint/lib/rules/${ruleName}/README.md`;
@@ -26,7 +42,7 @@ function isDDeprecated(ruleName, cb) {
   readStream.on('error', err => {
     readStream.destroy();
 
-    throw err;
+    handleError(err);
   });
 
   return new Promise(resolve => {
@@ -40,19 +56,21 @@ function isDDeprecated(ruleName, cb) {
   });
 }
 
-const resultsPromises = diff.map(rule => {
-  return isDDeprecated(rule).then(deprecated => {
-    return {
-      name: rule,
-      url: `https://stylelint.io/user-guide/rules/${rule}/`,
-      deprecated: deprecated ? 'yes' : ''
-    };
+function outputResult(resultsPromises) {
+  Promise.all(resultsPromises).then(results => {
+    const columns = columnify(results, {});
+
+    process.stdout.write(columns);
+    process.exit(0);
   });
-});
+}
 
-Promise.all(resultsPromises).then(results => {
-  const columns = columnify(results, {});
+const explorer = cosmiconfig('stylelint');
 
-  process.stdout.write(columns);
-  process.exit(0);
-});
+explorer
+  .load(process.cwd())
+  .then(result => result.config.rules)
+  .then(findUnconfiguredRules)
+  .then(buildResults)
+  .then(outputResult)
+  .catch(handleError);
