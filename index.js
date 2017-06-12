@@ -36,7 +36,7 @@ function buildResults(diff) {
 
 function isDDeprecated(ruleName, cb) {
   const target = `stylelint/lib/rules/${ruleName}/README.md`;
-  const filePath = path.resolve(__dirname, 'node_modules', target);
+  const filePath = path.resolve(process.cwd(), 'node_modules', target);
 
   // Limit the chunk size to get only the beginning of the file
   const readStream = fs.createReadStream(filePath, { highWaterMark: 1024 });
