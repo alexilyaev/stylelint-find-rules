@@ -4,6 +4,7 @@
   "description": "Find Stylelint rules that you don't have in your config",
   "main": "index.js",
   "scripts": {
+    "install-peers": "install-self-peers",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format-prettier": "prettier --print-width 100 --single-quote --write \"*.js\"",
     "lint-prettier": "prettier -l --print-width 100 --single-quote \"*.js\"",
@@ -15,11 +16,22 @@
       "git add"
     ]
   },
-  "dependencies": {},
+  "bin": {
+    "stylelint-find-rules": "index.js"
+  },
+  "dependencies": {
+    "columnify": "1.5.4",
+    "lodash.difference": "4.5.0",
+    "rc": "1.2.1"
+  },
   "devDependencies": {
-    "husky": "^0.13.4",
-    "lint-staged": "^3.6.1",
+    "@team-griffin/install-self-peers": "1.1.0",
+    "husky": "0.13.4",
+    "lint-staged": "3.6.1",
     "prettier": "1.4.4"
+  },
+  "peerDependencies": {
+    "stylelint": "^7.11.0"
   },
   "repository": {
     "type": "git",
