@@ -7,7 +7,9 @@ const path = require('path');
 const readline = require('readline');
 const columnify = require('columnify');
 const difference = require('lodash.difference');
-const stylelintRules = require('stylelint/lib/rules/index');
+const stylelint = require('stylelint');
+
+const stylelintRules = stylelint.rules;
 
 function handleError(err) {
   throw err;
