@@ -1,6 +1,7 @@
 stylelint-find-rules
 ======================
 
+[![Build Status](https://circleci.com/gh/alexilyaev/stylelint-find-rules.svg?&style=shield&circle-token=7fa54818dd54da41bad761661259992a74e50c7a)](https://circleci.com/gh/alexilyaev/stylelint-find-rules)
 [![version](https://img.shields.io/npm/v/stylelint-find-rules.svg?style=flat-square)](http://npm.im/stylelint-find-rules)
 [![MIT License](https://img.shields.io/npm/l/stylelint-find-rules.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 [![codebeat badge](https://codebeat.co/badges/10dc4306-cbef-4a6e-aa23-b197ee8ad3eb)](https://codebeat.co/projects/github-com-alexilyaev-stylelint-find-rules-master)
