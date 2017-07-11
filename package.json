@@ -18,7 +18,7 @@
     ]
   },
   "bin": {
-    "stylelint-find-rules": "index.js"
+    "stylelint-find-rules": "src/bin/stylelint-find-rules.js"
   },
   "dependencies": {
     "columnify": "1.5.4",
