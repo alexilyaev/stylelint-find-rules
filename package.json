@@ -1,6 +1,6 @@
 {
   "name": "stylelint-find-rules",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Find Stylelint rules that you don't have in your config",
   "main": "src/bin/stylelint-find-rules.js",
   "scripts": {
