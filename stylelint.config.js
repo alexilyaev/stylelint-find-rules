@@ -141,7 +141,7 @@ module.exports = {
     'block-closing-brace-space-before': 'always-single-line',
     'block-no-empty': true,
     'block-opening-brace-newline-after': 'always',
-    'block-opening-brace-newline-before': 'never',
+    'block-opening-brace-newline-before': 'never-multi-line',
     'block-opening-brace-space-after': 'always-single-line',
     'block-opening-brace-space-before': 'always',
     'selector-attribute-brackets-space-inside': 'never',
