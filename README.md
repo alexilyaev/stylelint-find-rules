@@ -1,10 +1,13 @@
 stylelint-find-rules
 ======================
 
+[![Build Status](https://circleci.com/gh/alexilyaev/stylelint-find-rules.svg?&style=shield&circle-token=7fa54818dd54da41bad761661259992a74e50c7a)](https://circleci.com/gh/alexilyaev/stylelint-find-rules)
 [![version](https://img.shields.io/npm/v/stylelint-find-rules.svg?style=flat-square)](http://npm.im/stylelint-find-rules)
 [![MIT License](https://img.shields.io/npm/l/stylelint-find-rules.svg?style=flat-square)](http://opensource.org/licenses/MIT)
 [![codebeat badge](https://codebeat.co/badges/10dc4306-cbef-4a6e-aa23-b197ee8ad3eb)](https://codebeat.co/projects/github-com-alexilyaev-stylelint-find-rules-master)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+
 
 Find [Stylelint](https://github.com/stylelint/stylelint) rules that are not configured in your Stylelint config.
 
