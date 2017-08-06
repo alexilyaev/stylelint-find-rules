@@ -43,10 +43,14 @@ function handleError(err) {
 
 function printColumns(heading, data) {
   const columns = columnify(data, {});
+  const spacer = '\n\n';
 
-  process.stdout.write(heading + '\n\n');
-  process.stdout.write(columns);
-  process.stdout.write('\n\n');
+  process.stdout.write(heading + spacer);
+
+  if (columns) {
+    process.stdout.write(columns);
+    process.stdout.write(spacer);
+  }
 }
 
 function cacheUserRules(cosmiconfig) {
@@ -98,6 +102,8 @@ function printUnconfiguredRules() {
   const userUnconfigured = difference(stylelintRulesNoDeprecated, userRulesNames);
 
   if (!userUnconfigured.length) {
+    printColumns('All good!');
+
     return process.exit(0);
   }
 
