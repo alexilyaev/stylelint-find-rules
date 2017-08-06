@@ -1,6 +1,6 @@
 {
   "name": "stylelint-find-rules",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "Find Stylelint rules that you don't have in your config",
   "main": "src/bin/stylelint-find-rules.js",
   "scripts": {
@@ -12,7 +12,10 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["format-prettier", "git add"]
+    "*.js": [
+      "format-prettier",
+      "git add"
+    ]
   },
   "bin": {
     "stylelint-find-rules": "src/bin/stylelint-find-rules.js"
