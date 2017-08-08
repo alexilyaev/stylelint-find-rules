@@ -5,6 +5,9 @@ const columnify = require('columnify');
 const difference = require('lodash.difference');
 const intersection = require('lodash.intersection');
 const stylelint = require('stylelint');
+const chalk = require('chalk');
+const EOL = require('os').EOL;
+const pkg = require('../../package.json');
 
 const isDDeprecated = require('./is-deprecated');
 
@@ -43,9 +46,10 @@ function handleError(err) {
 
 function printColumns(heading, data) {
   const columns = columnify(data, {});
-  const spacer = '\n\n';
+  const spacer = EOL + EOL;
 
-  process.stdout.write(heading + spacer);
+  process.stdout.write(heading);
+  process.stdout.write(spacer);
 
   if (columns) {
     process.stdout.write(columns);
@@ -73,6 +77,13 @@ function findDeprecatedStylelintRules() {
 }
 
 /**
+ * Print a nice header
+ */
+function printBegin() {
+  printColumns(chalk.whiteBright.bold(`stylelint-find-rules v${pkg.version}`));
+}
+
+/**
  * Find user configured rules that are deprecated
  */
 function printUserDeprecated() {
@@ -82,11 +93,11 @@ function printUserDeprecated() {
     return;
   }
 
-  const heading = 'The following configured rules are DEPRECATED...';
+  const heading = chalk.red.underline('The following configured rules are DEPRECATED:');
   const rulesToPrint = userDeprecated.map(rule => {
     return {
-      rule,
-      url: `https://stylelint.io/user-guide/rules/${rule}/`
+      rule: chalk.dim(rule),
+      url: chalk.dim(`https://stylelint.io/user-guide/rules/${rule}/`)
     };
   });
 
@@ -102,21 +113,21 @@ function printUnconfiguredRules() {
   const userUnconfigured = difference(stylelintRulesNoDeprecated, userRulesNames);
 
   if (!userUnconfigured.length) {
-    printColumns('All good!');
+    printColumns(chalk.green('All rules are up-to-date!'));
 
     return process.exit(0);
   }
 
   const rulesToPrint = userUnconfigured.map(rule => {
     return {
-      rule,
-      url: `https://stylelint.io/user-guide/rules/${rule}/`
+      rule: chalk.dim(rule),
+      url: chalk.dim(`https://stylelint.io/user-guide/rules/${rule}/`)
     };
   });
 
-  const heading = 'The following rules are available but not configured...';
+  const heading = 'The following rules are available but not configured:';
 
-  printColumns(heading, rulesToPrint);
+  printColumns(chalk.cyan.underline(heading), rulesToPrint);
   process.exit(0);
 }
 
@@ -124,6 +135,7 @@ explorer
   .load(process.cwd())
   .then(cacheUserRules)
   .then(findDeprecatedStylelintRules)
+  .then(printBegin)
   .then(printUserDeprecated)
   .then(printUnconfiguredRules)
   .catch(handleError);

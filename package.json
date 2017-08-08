@@ -21,6 +21,7 @@
     "stylelint-find-rules": "src/bin/stylelint-find-rules.js"
   },
   "dependencies": {
+    "chalk": "2.1.0",
     "columnify": "1.5.4",
     "cosmiconfig": "2.2.2",
     "lodash.difference": "4.5.0",
