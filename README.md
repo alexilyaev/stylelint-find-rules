@@ -70,3 +70,8 @@ cosmiconfig supports a `--config` flag, so you can do:
 ```
 ./node_modules/.bin/stylelint-find-rules --config my-custom-config.js
 ```
+
+### How does it handle `extends`?
+
+The rules of `extends` are added to the list of configured rules, thus, if a rule is covered in an
+extend config, it will not show up in the results.  

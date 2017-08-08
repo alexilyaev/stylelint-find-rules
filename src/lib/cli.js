@@ -1,14 +1,13 @@
 'use strict';
 
+const _ = require('lodash');
 const cosmiconfig = require('cosmiconfig');
 const columnify = require('columnify');
-const difference = require('lodash.difference');
-const intersection = require('lodash.intersection');
 const stylelint = require('stylelint');
 const chalk = require('chalk');
 const EOL = require('os').EOL;
-const pkg = require('../../package.json');
 
+const pkg = require('../../package.json');
 const isDDeprecated = require('./is-deprecated');
 
 const explorer = cosmiconfig('stylelint');
@@ -90,10 +89,11 @@ function printColumns(heading, data) {
 }
 
 /**
- * Cache the user config rules into a variable
+ * Get user rules
+ * Gather rules from `extends` as well
  * Fail with proper error if no config found
  */
-function cacheUserRules(cosmiconfig) {
+function getUserRules(cosmiconfig) {
   if (!cosmiconfig) {
     printColumns(
       chalk.red(
@@ -105,7 +105,22 @@ function cacheUserRules(cosmiconfig) {
     return process.exit(1);
   }
 
-  userRulesNames = Object.keys(cosmiconfig.config.rules);
+  const config = cosmiconfig.config;
+  let rulesNames = Object.keys(config.rules);
+
+  if (config.extends) {
+    const normalizedExtends = Array.isArray(config.extends) ? config.extends : [config.extends];
+
+    normalizedExtends.forEach(extendName => {
+      // Get the `extends` config file
+      const configData = require(extendName);
+      const extendRulesNames = Object.keys(configData.rules);
+
+      rulesNames = rulesNames.concat(extendRulesNames);
+    });
+  }
+
+  userRulesNames = _.sortedUniq(rulesNames);
 }
 
 /**
@@ -134,7 +149,7 @@ function printBegin() {
  * Find user configured rules that are deprecated
  */
 function printUserDeprecated() {
-  const userDeprecated = intersection(deprecatedRules, userRulesNames);
+  const userDeprecated = _.intersection(deprecatedRules, userRulesNames);
 
   if (!userDeprecated.length) {
     return;
@@ -155,8 +170,8 @@ function printUserDeprecated() {
  * Find available stylelint rules that the user hasn't configured yet
  */
 function printUnconfiguredRules() {
-  const stylelintRulesNoDeprecated = difference(stylelintRulesNames, deprecatedRules);
-  const userUnconfigured = difference(stylelintRulesNoDeprecated, userRulesNames);
+  const stylelintRulesNoDeprecated = _.difference(stylelintRulesNames, deprecatedRules);
+  const userUnconfigured = _.difference(stylelintRulesNoDeprecated, userRulesNames);
 
   if (!userUnconfigured.length) {
     return printColumns(chalk.green('All rules are up-to-date!'));
@@ -194,7 +209,7 @@ function init() {
 
   explorer
     .load(process.cwd())
-    .then(cacheUserRules)
+    .then(getUserRules)
     .then(printBegin)
     .then(findDeprecatedStylelintRules)
     .then(printUserDeprecated)

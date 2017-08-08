@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "fail": "npm start -- --config tests/configs/deprecated-and-new.config.js",
+    "fail": "node index.js --config tests/configs/deprecated-and-new.config.js",
     "install-peers": "install-self-peers",
     "format-prettier": "prettier --print-width 100 --single-quote --write \"**/*.js\"",
     "format-eslint": "eslint -c .eslintrc --fix \"**/*.js\"",
@@ -29,8 +29,7 @@
     "chalk": "2.1.0",
     "columnify": "1.5.4",
     "cosmiconfig": "2.2.2",
-    "lodash.difference": "4.5.0",
-    "lodash.intersection": "4.4.0",
+    "lodash": "4.17.4",
     "yargs": "8.0.2"
   },
   "devDependencies": {
@@ -43,7 +42,8 @@
     "prettier": "1.5.3",
     "prettier-eslint-cli": "4.1.1",
     "stylelint": ">=7.0.0",
-    "stylelint-config-recommended": "1.0.0"
+    "stylelint-config-recommended": "1.0.0",
+    "stylelint-config-standard": "17.0.0"
   },
   "peerDependencies": {
     "stylelint": ">=7.0.0"

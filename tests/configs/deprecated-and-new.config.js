@@ -1,19 +1,21 @@
 'use strict';
 
 module.exports = {
-  extends: 'stylelint-config-recommended',
+  extends: ['stylelint-config-recommended', 'stylelint-config-standard'],
 
   rules: {
     // Simulate deprecated rules
     'max-nesting-depth': true,
 
     // Simulate available rules
-    // 'at-rule-name-case': 'lower',
     // 'at-rule-name-newline-after': null,
-    // 'at-rule-name-space-after': 'always',
-    // 'at-rule-no-unknown': true,
+    // 'at-rule-blacklist': null,
 
-    'at-rule-blacklist': null,
+    // Simulate rules covered by extends
+    // 'at-rule-no-unknown': true,
+    // 'at-rule-name-case': 'lower',
+    // 'at-rule-name-space-after': 'always',
+
     'at-rule-empty-line-before': [
       'always',
       {
