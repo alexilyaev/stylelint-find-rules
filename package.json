@@ -2,8 +2,10 @@
   "name": "stylelint-find-rules",
   "version": "0.7.0",
   "description": "Find Stylelint rules that you don't have in your config",
-  "main": "src/bin/stylelint-find-rules.js",
+  "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "fail": "npm start -- --config tests/configs/deprecated-and-new.config.js",
     "install-peers": "install-self-peers",
     "format-prettier": "prettier --print-width 100 --single-quote --write \"**/*.js\"",
     "format-eslint": "eslint -c .eslintrc --fix \"**/*.js\"",
@@ -12,7 +14,6 @@
     "lint-eslint": "eslint -c .eslintrc --max-warnings 0 \"**/*.js\"",
     "lint-eslint-config-prettier": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint": "npm run lint-eslint-config-prettier && npm run lint-prettier && npm run lint-eslint",
-    "stylelint-find-unused-rules": "node src/bin/stylelint-find-rules.js",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -41,7 +42,8 @@
     "lint-staged": "4.0.2",
     "prettier": "1.5.3",
     "prettier-eslint-cli": "4.1.1",
-    "stylelint": ">=7.0.0"
+    "stylelint": ">=7.0.0",
+    "stylelint-config-recommended": "1.0.0"
   },
   "peerDependencies": {
     "stylelint": ">=7.0.0"
