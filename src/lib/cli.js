@@ -58,6 +58,17 @@ function printColumns(heading, data) {
 }
 
 function cacheUserRules(cosmiconfig) {
+  if (!cosmiconfig) {
+    printColumns(
+      chalk.red(
+        `Oops, no Stylelint config found, we support cosmiconfig...${EOL}` +
+          chalk.grey('https://github.com/davidtheclark/cosmiconfig')
+      )
+    );
+
+    return process.exit(1);
+  }
+
   userRulesNames = Object.keys(cosmiconfig.config.rules);
 }
 

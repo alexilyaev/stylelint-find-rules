@@ -36,8 +36,8 @@ npm i -D stylelint-find-rules
 Usage
 ------
 
-This package requires `stylelint` to be installed in the project, as it will search available rules
-from that package.
+This package requires `stylelint` to be installed in the project, as it will search for available
+rules from that package.
 
 ### npm script
 
@@ -62,3 +62,11 @@ Supported configs
 
 Just like Stylelint, this package uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
 to find your config data, so if Stylelint works for you, this should too.
+
+### Custom config file
+
+cosmiconfig supports a `--config` flag, so you can do:
+
+```
+./node_modules/.bin/stylelint-find-rules --config my-custom-config.js
+```
