@@ -1,0 +1,83 @@
+{
+  "root": true,
+
+  "plugins": [],
+
+  "extends": [
+    "eslint:recommended",
+    "prettier"
+  ],
+
+  "env": {
+    "es6": true,
+    "node": true
+  },
+
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "sourceType": "script"
+  },
+
+  "rules": {
+    // Disabled, May conflict with Prettier
+    "quotes": [0, "single", { "allowTemplateLiterals": true }],
+    "max-len": [0, { "code": 100, "ignoreUrls": true }],
+    "arrow-parens": [0, "as-needed"],
+    "arrow-spacing": 0,
+    "brace-style": [0, "1tbs", { "allowSingleLine": false }],
+    "eol-last": 0,
+    "indent": [0, 2, { "SwitchCase": 1 }],
+    "key-spacing": [0, { "mode": "strict" }],
+    "keyword-spacing": 0,
+    "no-extra-semi": 0,
+    "no-mixed-spaces-and-tabs": 0,
+    "no-multi-spaces": [0, {
+      "exceptions": {
+        "VariableDeclarator": true,
+        "ImportDeclaration": true,
+        "ImportSpecifier": true,
+        "AssignmentExpression": true,
+        "ClassProperty": true
+      }
+    }],
+    "no-multiple-empty-lines": [0, { "max": 1 }],
+    "no-trailing-spaces": 0,
+    "object-curly-spacing": [0, "always"],
+    "operator-linebreak": [0, "after", { "overrides": { "?": "before", ":": "before" } }],
+    "semi": [0, "always"],
+    "semi-spacing": [0, {"before": false, "after": true}],
+    "semi-style": [0, "last"],
+    "space-before-blocks": [0, "always"],
+    "switch-colon-spacing": [0, {"before": false, "after": true}],
+
+    // Warning
+    "no-console": 1,
+    "no-debugger": 1,
+    "no-unreachable": 1,
+    "no-unused-vars": [1, { "vars": "all", "args": "after-used" }],
+    "newline-after-var": [1, "always"],
+    "newline-before-return": 1,
+    "prefer-arrow-callback": 1,
+    "prefer-const": 1,
+    "no-multi-assign": 1,
+    "no-warning-comments": [1, { "terms": ["fixme", "todo", "hack", "review", "xxx"] }],
+    "no-useless-constructor": 1,
+
+    "linebreak-style": [1, "unix"],
+    "no-else-return": 1,
+    "curly": [1, "all"],
+    "no-inline-comments": 1,
+    "spaced-comment": [1, "always", { "exceptions": ["-"] }],
+    "no-nested-ternary": 1,
+    "no-unneeded-ternary": [1, { "defaultAssignment": false }],
+    "no-var": 1,
+    "eqeqeq": [1, "always"],
+    "no-return-assign": 1,
+    "no-multi-str": 1,
+    "strict": [1, "global"]
+  }
+}

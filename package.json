@@ -6,14 +6,18 @@
   "scripts": {
     "install-peers": "install-self-peers",
     "format-prettier": "prettier --print-width 100 --single-quote --write \"**/*.js\"",
+    "format-eslint": "eslint -c .eslintrc --fix \"**/*.js\"",
+    "format": "prettier-eslint --prettier-last --print-width 100 --single-quote --write \"**/*.js\"",
     "lint-prettier": "prettier -l --print-width 100 --single-quote \"**/*.js\"",
-    "lint": "npm run lint-prettier",
+    "lint-eslint": "eslint -c .eslintrc --max-warnings 0 \"**/*.js\"",
+    "lint-eslint-config-prettier": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "lint": "npm run lint-eslint-config-prettier && npm run lint-prettier && npm run lint-eslint",
     "stylelint-find-unused-rules": "node src/bin/stylelint-find-rules.js",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.js": [
-      "format-prettier",
+      "format",
       "git add"
     ]
   },
@@ -30,9 +34,13 @@
   },
   "devDependencies": {
     "@team-griffin/install-self-peers": "1.1.1",
+    "babel-eslint": "7.2.3",
+    "eslint": "4.4.1",
+    "eslint-config-prettier": "2.3.0",
     "husky": "0.14.3",
     "lint-staged": "4.0.2",
     "prettier": "1.5.3",
+    "prettier-eslint-cli": "4.1.1",
     "stylelint": ">=7.0.0"
   },
   "peerDependencies": {
