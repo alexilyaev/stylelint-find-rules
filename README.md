@@ -13,6 +13,11 @@ Find [Stylelint](https://github.com/stylelint/stylelint) rules that are not conf
 
 > Inspired by [eslint-find-rules](https://github.com/sarbbottam/eslint-find-rules)
 
+Example Output
+-----------------
+
+![Example](example.png)
+
 Installation
 -------------
 
