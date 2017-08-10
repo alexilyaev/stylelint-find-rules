@@ -22,7 +22,7 @@ module.exports = function isDDeprecated(ruleName) {
 
   // Limit the chunk size to get only the beginning of the file
   const readStream = fs.createReadStream(filePath, {
-    highWaterMark: 1024
+    highWaterMark: 512
   });
 
   readStream.on('error', err => {

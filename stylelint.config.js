@@ -209,6 +209,7 @@ module.exports = {
     'media-query-list-comma-space-before': 'never-single-line',
     'max-empty-lines': 1,
     'max-line-length': 100,
+    'max-nesting-depth': null,
     'no-descending-specificity': true,
     'no-duplicate-selectors': true,
     'no-empty-source': true,
