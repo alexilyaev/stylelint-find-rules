@@ -9,6 +9,7 @@
     "install-peers": "install-self-peers",
     "format-prettier": "prettier --print-width 100 --single-quote --write \"**/*.js\"",
     "format-eslint": "eslint -c .eslintrc --fix \"**/*.js\"",
+    "format-staged": "prettier-eslint --prettier-last --print-width 100 --single-quote --write",
     "format": "prettier-eslint --prettier-last --print-width 100 --single-quote --write \"**/*.js\"",
     "lint-prettier": "prettier -l --print-width 100 --single-quote \"**/*.js\"",
     "lint-eslint": "eslint -c .eslintrc --max-warnings 0 \"**/*.js\"",
@@ -18,7 +19,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "format",
+      "format-staged",
       "git add"
     ]
   },
