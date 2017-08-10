@@ -4,17 +4,22 @@ module.exports = {
   extends: ['stylelint-config-recommended', 'stylelint-config-standard'],
 
   rules: {
-    // Simulate deprecated rules
-    'max-nesting-depth': true,
-
-    // Simulate available rules
-    // 'at-rule-name-newline-after': null,
+    // Simulate unset available rules
     // 'at-rule-blacklist': null,
+    // 'at-rule-name-newline-after': null,
 
-    // Simulate rules covered by extends
-    // 'at-rule-no-unknown': true,
+    // Simulate unset rules covered by extends
     // 'at-rule-name-case': 'lower',
     // 'at-rule-name-space-after': 'always',
+    // 'at-rule-no-unknown': true,
+
+    // Simulate set rules that are deprecated (requires `--qa` flag to work)
+    'color-hex-case': 'lower',
+    'color-hex-length': 'short',
+
+    // Simulate set rules that are not available at all
+    'some-bogus-rule': true,
+    'some-other-bogus-rule': true,
 
     'at-rule-empty-line-before': [
       'always',
@@ -33,8 +38,6 @@ module.exports = {
     'at-rule-semicolon-newline-after': 'always',
     'at-rule-semicolon-space-before': 'never',
     'at-rule-whitelist': null,
-    'color-hex-case': 'lower',
-    'color-hex-length': 'short',
     'color-named': null,
     'color-no-hex': null,
     'color-no-invalid-hex': true,
@@ -219,6 +222,7 @@ module.exports = {
     'media-query-list-comma-space-before': 'never-single-line',
     'max-empty-lines': 1,
     'max-line-length': 100,
+    'max-nesting-depth': null,
     'no-descending-specificity': true,
     'no-duplicate-selectors': true,
     'no-empty-source': true,

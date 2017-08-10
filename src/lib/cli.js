@@ -5,6 +5,7 @@ const cosmiconfig = require('cosmiconfig');
 const columnify = require('columnify');
 const stylelint = require('stylelint');
 const chalk = require('chalk');
+const yargs = require('yargs');
 const EOL = require('os').EOL;
 
 const pkg = require('../../package.json');
@@ -12,9 +13,57 @@ const isDDeprecated = require('./is-deprecated');
 
 const explorer = cosmiconfig('stylelint');
 
-const stylelintRulesNames = Object.keys(stylelint.rules);
-let deprecatedRules = [];
-let userRulesNames = [];
+const rules = {
+  stylelintAll: Object.keys(stylelint.rules),
+  stylelintDeprecated: [],
+  stylelintNoDeprecated: [],
+  userRulesNames: []
+};
+
+/**
+ * Define command line arguments
+ */
+const argv = yargs
+  .usage('stylelint-find-rules [options]')
+  .example('stylelint-find-rules -u')
+  .option('u', {
+    type: 'boolean',
+    alias: 'unused',
+    describe: `Find available rules that are not configured
+               To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-u')}`,
+    default: true
+  })
+  .option('d', {
+    type: 'boolean',
+    alias: 'deprecated',
+    describe: `Find deprecated configured rules
+               To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-d')}`,
+    default: true
+  })
+  .option('i', {
+    type: 'boolean',
+    alias: 'invalid',
+    describe: `Find configured rules that are no longer available
+               To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-i')}`,
+    default: true
+  })
+  .option('c', {
+    type: 'boolean',
+    alias: 'current',
+    describe: 'Find all currently configured rules'
+  })
+  .option('a', {
+    type: 'boolean',
+    alias: 'available',
+    describe: 'Find all available Stylelint rules'
+  })
+  .option('config', {
+    describe: 'Optional, path to a custom config file (used by cosmiconfig)'
+  })
+  .help('h')
+  .alias('h', 'help')
+  .group(['help', 'config'], 'General:')
+  .wrap(100).argv;
 
 /**
  * High resolution timing API
@@ -26,29 +75,6 @@ function time() {
 
   return time[0] * 1e3 + time[1] / 1e6;
 }
-
-// const options = {
-//   getCurrentRules: ['current', 'c'],
-//   getPluginRules: ['plugin', 'p'],
-//   getAllAvailableRules: ['all-available', 'a'],
-//   getUnusedRules: ['unused', 'u'],
-//   n: [],
-//   error: ['error'],
-//   core: ['core'],
-//   verbose: ['verbose', 'v']
-// };
-//
-// const argv = require('yargs')
-//   .boolean(Object.keys(options))
-//   .alias(options)
-//   .option('include', {
-//     alias: 'i',
-//     choices: ['deprecated'],
-//     type: 'string'
-//   })
-//   .default('error', true)
-//   .default('core', true)
-//   .help().argv;
 
 /**
  * Handle promise rejections and errors
@@ -63,7 +89,7 @@ function handleError(err) {
   printColumns(chalk.red('Error: ' + errMsg));
   printColumns(
     chalk.white(
-      "If you can't settle this, please open an issue at:" + EOL + chalk.blue(pkg.bugs.url)
+      "If you can't settle this, please open an issue at:" + EOL + chalk.cyan(pkg.bugs.url)
     )
   );
   process.exit(1);
@@ -89,25 +115,40 @@ function printColumns(heading, data) {
 }
 
 /**
- * Get user rules
- * Gather rules from `extends` as well
- * Fail with proper error if no config found
+ * Check we got everything we need:
+ * - Stylelint config (by comiconfig)
+ * - CLI arguments
  */
-function getUserRules(cosmiconfig) {
+function validate(cosmiconfig) {
   if (!cosmiconfig) {
     printColumns(
       chalk.red(
         `Oops, no Stylelint config found, we support cosmiconfig...${EOL}` +
-          chalk.blue('https://github.com/davidtheclark/cosmiconfig')
+          chalk.cyan('https://github.com/davidtheclark/cosmiconfig')
       )
     );
 
     return process.exit(1);
   }
 
-  const config = cosmiconfig.config;
+  if (!argv.unused && !argv.deprecated && !argv.current && !argv.available) {
+    printColumns(chalk.red(`Oops, one of the command line Options must be set...${EOL}`));
+    yargs.showHelp();
+
+    return process.exit(1);
+  }
+
+  return cosmiconfig.config;
+}
+
+/**
+ * Get user rules
+ * Gather rules from `extends` as well
+ */
+function getUserRules(config) {
   let rulesNames = Object.keys(config.rules);
 
+  // Handle extends
   if (config.extends) {
     const normalizedExtends = Array.isArray(config.extends) ? config.extends : [config.extends];
 
@@ -120,7 +161,7 @@ function getUserRules(cosmiconfig) {
     });
   }
 
-  userRulesNames = _.sortedUniq(rulesNames);
+  rules.userRulesNames = _.sortedUniq(rulesNames);
 }
 
 /**
@@ -129,12 +170,27 @@ function getUserRules(cosmiconfig) {
  * @returns {Promise}
  */
 function findDeprecatedStylelintRules() {
-  const isDeprecatedPromises = stylelintRulesNames.map(isDDeprecated);
+  if (!argv.deprecated && !argv.unused) {
+    return Promise.resolve();
+  }
+
+  const isDeprecatedPromises = rules.stylelintAll.map(isDDeprecated);
 
   return Promise.all(isDeprecatedPromises).then(rulesIsDeprecated => {
-    deprecatedRules = stylelintRulesNames.filter((rule, index) => rulesIsDeprecated[index]);
+    rules.stylelintDeprecated = rules.stylelintAll.filter(
+      (rule, index) => rulesIsDeprecated[index]
+    );
 
-    return deprecatedRules;
+    // Don't remove, just for QA
+    if (argv.qa) {
+      rules.stylelintDeprecated.push('color-hex-case', 'color-hex-length');
+    }
+
+    if (argv.unused) {
+      rules.stylelintNoDeprecated = _.difference(rules.stylelintAll, rules.stylelintDeprecated);
+    }
+
+    return rules.stylelintDeprecated;
   });
 }
 
@@ -146,20 +202,18 @@ function printBegin() {
 }
 
 /**
- * Find user configured rules that are deprecated
+ * Print currently configured rules
  */
-function printUserDeprecated() {
-  const userDeprecated = _.intersection(deprecatedRules, userRulesNames);
-
-  if (!userDeprecated.length) {
+function printUserCurrent() {
+  if (!argv.current) {
     return;
   }
 
-  const heading = chalk.red.underline('The following configured rules are DEPRECATED:');
-  const rulesToPrint = userDeprecated.map(rule => {
+  const heading = chalk.blue.underline('CURRENT: Currently configured user rules:');
+  const rulesToPrint = rules.userRulesNames.map(rule => {
     return {
       rule,
-      url: chalk.blue(`https://stylelint.io/user-guide/rules/${rule}/`)
+      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
     };
   });
 
@@ -167,30 +221,105 @@ function printUserDeprecated() {
 }
 
 /**
- * Find available stylelint rules that the user hasn't configured yet
+ * Print all available Stylelint rules
  */
-function printUnconfiguredRules() {
-  const stylelintRulesNoDeprecated = _.difference(stylelintRulesNames, deprecatedRules);
-  const userUnconfigured = _.difference(stylelintRulesNoDeprecated, userRulesNames);
+function printAllAvailable() {
+  if (!argv.available) {
+    return;
+  }
+
+  const heading = chalk.blue.underline('AVAILABLE: All available Stylelint rules:');
+  const rulesToPrint = rules.stylelintAll.map(rule => {
+    return {
+      rule,
+      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
+    };
+  });
+
+  printColumns(heading, rulesToPrint);
+}
+
+/**
+ * Print configured rules that are no longer available
+ */
+function printConfiguredUnavailable() {
+  if (!argv.invalid) {
+    return;
+  }
+
+  const configuredUnavailable = _.difference(rules.userRulesNames, rules.stylelintAll);
+
+  if (!configuredUnavailable.length) {
+    return;
+  }
+
+  const heading = chalk.red.underline('INVALID: Configured rules that are no longer available:');
+  const rulesToPrint = configuredUnavailable.map(rule => {
+    return {
+      rule: chalk.redBright(rule)
+    };
+  });
+
+  printColumns(heading, rulesToPrint);
+}
+
+/**
+ * Print user configured rules that are deprecated
+ */
+function printUserDeprecated() {
+  if (!argv.deprecated) {
+    return;
+  }
+
+  const userDeprecated = _.intersection(rules.stylelintDeprecated, rules.userRulesNames);
+
+  if (!userDeprecated.length) {
+    return;
+  }
+
+  const heading = chalk.red.underline('DEPRECATED: Configured rules that are deprecated:');
+  const rulesToPrint = userDeprecated.map(rule => {
+    return {
+      rule: chalk.redBright(rule),
+      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
+    };
+  });
+
+  printColumns(heading, rulesToPrint);
+}
+
+/**
+ * Print available stylelint rules that the user hasn't configured yet
+ */
+function printUserUnused() {
+  if (!argv.unused) {
+    return;
+  }
+
+  const userUnconfigured = _.difference(rules.stylelintNoDeprecated, rules.userRulesNames);
+  let heading;
 
   if (!userUnconfigured.length) {
-    return printColumns(chalk.green('All rules are up-to-date!'));
+    heading = chalk.green('All rules are up-to-date!');
+    printColumns(heading);
+
+    return;
   }
 
   const rulesToPrint = userUnconfigured.map(rule => {
     return {
       rule,
-      url: chalk.blue(`https://stylelint.io/user-guide/rules/${rule}/`)
+      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
     };
   });
 
-  const heading = 'The following rules are available but not configured:';
+  heading = chalk.blue.underline('UNUSED: Available rules that are not configured:');
 
-  printColumns(chalk.cyan.underline(heading), rulesToPrint);
+  printColumns(heading, rulesToPrint);
 }
 
 /**
- * Print how much time it took the tool to run
+ * Print how long it took the tool to execute
  */
 function printTimingAndExit(startTime) {
   const execTime = time() - startTime;
@@ -209,11 +338,15 @@ function init() {
 
   explorer
     .load(process.cwd())
+    .then(validate)
     .then(getUserRules)
-    .then(printBegin)
     .then(findDeprecatedStylelintRules)
+    .then(printBegin)
+    .then(printUserCurrent)
+    .then(printAllAvailable)
+    .then(printUserUnused)
     .then(printUserDeprecated)
-    .then(printUnconfiguredRules)
+    .then(printConfiguredUnavailable)
     .then(printTimingAndExit.bind(null, startTime))
     .catch(handleError);
 }

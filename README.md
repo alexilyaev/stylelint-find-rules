@@ -57,6 +57,29 @@ rules from that package.
 ./node_modules/.bin/stylelint-find-rules
 ```
 
+### Options
+
+```
+stylelint-find-rules [options]
+
+General:
+  -h, --help  Show help                                                                    [boolean]
+  --config    Optional, path to a custom config file (used by cosmiconfig)
+
+Options:
+  -u, --unused      Find available rules that are not configured
+                    To disable, set to false or use --no-u                 [boolean] [default: true]
+  -d, --deprecated  Find deprecated configured rules
+                    To disable, set to false or use --no-d                 [boolean] [default: true]
+  -i, --invalid     Find configured rules that are no longer available
+                    To disable, set to false or use --no-i                 [boolean] [default: true]
+  -c, --current     Find all currently configured rules                                    [boolean]
+  -a, --available   Find all available Stylelint rules                                     [boolean]
+
+Examples:
+  stylelint-find-rules -u
+```
+
 Supported configs
 ------------------
 
