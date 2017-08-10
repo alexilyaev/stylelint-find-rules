@@ -9,10 +9,22 @@ Feel free to open an issue to discuss feature requests, or if you're savvy, just
 Style Guide
 ------------
 
-This project happily uses [Prettier](https://github.com/prettier/prettier), a tool that
-automatically reformat's code with almost zero configuration.  
+This project happily uses [Prettier](https://github.com/prettier/prettier) (reformat's code based on common practices) and [ESLint](https://github.com/eslint/eslint) (static analysis of code patterns, can also fix stuff).  
 The result is a consistent code style and happy unicorns.
 
-There's a Git `precommit` hook in this repo (using [husky](https://github.com/typicode/husky)), so when you commit, all files will get formatted with prettier and committed.
+There's a Git `precommit` hook in this repo (using [husky](https://github.com/typicode/husky)),
+so when you commit, all files will be formatted with Prettier and ESLint and the changes will be added
+to the commit.
 
-You can also setup [editor-integration](https://github.com/prettier/prettier#editor-integration).
+You can also setup [editor-integration](https://github.com/prettier/prettier#editor-integration)
+for automatically reformatting your code with Prettier on Save or using a hotkey.
+
+Running In Development
+-----------------------
+
+`npm start` will run the same file that users run in projects.  
+There are test configs under `tests/configs/`, so we can provide a specific config using:  
+
+```
+npm start -- --config tests/configs/deprecated-and-new.config.js
+```

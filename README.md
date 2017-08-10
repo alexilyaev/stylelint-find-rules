@@ -75,3 +75,8 @@ cosmiconfig supports a `--config` flag, so you can do:
 
 The rules of `extends` are added to the list of configured rules, thus, if a rule is covered in an
 extend config, it will not show up in the results.  
+
+Contributing
+--------------
+
+See the [CONTRIBUTING](CONTRIBUTING.md) document.
