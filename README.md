@@ -77,7 +77,9 @@ Options:
   -a, --available   Find all available Stylelint rules                                     [boolean]
 
 Examples:
-  stylelint-find-rules -u
+  stylelint-find-rules
+  stylelint-find-rules --no-d --no-i
+  stylelint-find-rules --config path/to/custom.config.js
 ```
 
 Supported configs

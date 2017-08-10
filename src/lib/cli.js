@@ -25,7 +25,9 @@ const rules = {
  */
 const argv = yargs
   .usage('stylelint-find-rules [options]')
-  .example('stylelint-find-rules -u')
+  .example('stylelint-find-rules')
+  .example('stylelint-find-rules --no-d --no-i')
+  .example('stylelint-find-rules --config path/to/custom.config.js')
   .option('u', {
     type: 'boolean',
     alias: 'unused',
