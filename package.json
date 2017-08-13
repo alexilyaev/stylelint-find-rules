@@ -1,7 +1,7 @@
 {
   "name": "stylelint-find-rules",
   "version": "1.0.1",
-  "description": "Find Stylelint rules that you don't have in your config",
+  "description": "Find stylelint rules that you don't have in your config",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

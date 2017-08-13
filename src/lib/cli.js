@@ -57,7 +57,7 @@ const argv = yargs
   .option('a', {
     type: 'boolean',
     alias: 'available',
-    describe: 'Find all available Stylelint rules'
+    describe: 'Find all available stylelint rules'
   })
   .option('config', {
     describe: 'Optional, path to a custom config file (used by cosmiconfig)'
@@ -118,14 +118,14 @@ function printColumns(heading, data) {
 
 /**
  * Check we got everything we need:
- * - Stylelint config (by comiconfig)
+ * - stylelint config (by comiconfig)
  * - CLI arguments
  */
 function validate(cosmiconfig) {
   if (!cosmiconfig) {
     printColumns(
       chalk.red(
-        `Oops, no Stylelint config found, we support cosmiconfig...${EOL}` +
+        `Oops, no stylelint config found, we support cosmiconfig...${EOL}` +
           chalk.cyan('https://github.com/davidtheclark/cosmiconfig')
       )
     );
@@ -167,7 +167,7 @@ function getUserRules(config) {
 }
 
 /**
- * Find all deprecated rules from the list of Stylelint rules
+ * Find all deprecated rules from the list of stylelint rules
  *
  * @returns {Promise}
  */
@@ -223,14 +223,14 @@ function printUserCurrent() {
 }
 
 /**
- * Print all available Stylelint rules
+ * Print all available stylelint rules
  */
 function printAllAvailable() {
   if (!argv.available) {
     return;
   }
 
-  const heading = chalk.blue.underline('AVAILABLE: All available Stylelint rules:');
+  const heading = chalk.blue.underline('AVAILABLE: All available stylelint rules:');
   const rulesToPrint = rules.stylelintAll.map(rule => {
     return {
       rule,
