@@ -9,7 +9,7 @@ stylelint-find-rules
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 
-Find [Stylelint](https://github.com/stylelint/stylelint) rules that are not configured in your Stylelint config.
+Find [stylelint](https://github.com/stylelint/stylelint) rules that are not configured in your stylelint config.
 
 > Inspired by [eslint-find-rules](https://github.com/sarbbottam/eslint-find-rules)
 
@@ -74,7 +74,7 @@ Options:
   -i, --invalid     Find configured rules that are no longer available
                     To disable, set to false or use --no-i                 [boolean] [default: true]
   -c, --current     Find all currently configured rules                                    [boolean]
-  -a, --available   Find all available Stylelint rules                                     [boolean]
+  -a, --available   Find all available stylelint rules                                     [boolean]
 
 Examples:
   stylelint-find-rules
@@ -85,8 +85,8 @@ Examples:
 Supported configs
 ------------------
 
-Just like Stylelint, this package uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
-to find your config data, so if Stylelint works for you, this should too.
+Just like stylelint, this package uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
+to find your config data, so if stylelint works for you, this should too.
 
 ### Custom config file
 

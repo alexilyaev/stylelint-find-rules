@@ -10,7 +10,7 @@ function handleError(err) {
 /**
  * Check if the given rule is deprecated
  * This is a hacky solution that looks for "deprecated" in the rule docs
- * Stylelint has no meta data, see discussion:
+ * stylelint has no meta data, see discussion:
  * https://github.com/stylelint/stylelint/issues/2622
  *
  * @param {string} ruleName
