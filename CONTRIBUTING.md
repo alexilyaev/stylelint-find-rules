@@ -28,3 +28,14 @@ There are test configs under `tests/configs/`, so we can provide a specific conf
 ```
 npm start -- --config tests/configs/deprecated-and-new.config.js
 ```
+
+Commit Message Format
+----------------------
+
+```
+Tag: Short description (fixes #1234)
+
+Longer description if necessary
+```
+
+Based on [ESLint commit message conventions](https://eslint.org/docs/developer-guide/contributing/pull-requests#step-2-make-your-changes)
