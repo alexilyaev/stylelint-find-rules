@@ -53,10 +53,13 @@
     "semi-style": [0, "last"],
     "space-before-blocks": [0, "always"],
     "switch-colon-spacing": [0, {"before": false, "after": true}],
+    "func-call-spacing": [0, "never"],
+    "function-paren-newline": [0, "multiline"],
 
     // Warning
     "no-console": 1,
     "no-debugger": 1,
+    "no-undef": 1,
     "no-unreachable": 1,
     "no-unused-vars": [1, { "vars": "all", "args": "after-used" }],
     "newline-after-var": [1, "always"],
@@ -78,6 +81,13 @@
     "eqeqeq": [1, "always"],
     "no-return-assign": 1,
     "no-multi-str": 1,
+    "padding-line-between-statements": [
+      1,
+      { "blankLine": "always", "prev": "*", "next": "return" },
+      { "blankLine": "always", "prev": ["const", "let"], "next": "*"},
+      { "blankLine": "any",    "prev": ["const", "let"], "next": ["const", "let"]}
+    ],
+
     "strict": [1, "global"]
   }
 }
