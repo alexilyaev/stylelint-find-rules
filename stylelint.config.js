@@ -74,7 +74,7 @@ module.exports = {
         ignore: ['inside-parens']
       }
     ],
-    'number-leading-zero': 'never',
+    'number-leading-zero': 'always',
     'number-max-precision': null,
     'number-no-trailing-zeros': true,
     'string-no-newline': true,
