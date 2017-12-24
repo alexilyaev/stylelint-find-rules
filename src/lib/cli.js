@@ -6,6 +6,7 @@ const columnify = require('columnify');
 const stylelint = require('stylelint');
 const chalk = require('chalk');
 const yargs = require('yargs');
+const Promise = require('bluebird');
 const EOL = require('os').EOL;
 
 const pkg = require('../../package.json');

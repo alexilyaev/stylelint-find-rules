@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const Promise = require('bluebird');
 
 function handleError(err) {
   throw err;

@@ -1,7 +1,9 @@
 {
   "root": true,
 
-  "plugins": [],
+  "plugins": [
+    "promise"
+  ],
 
   "extends": [
     "eslint:recommended",
@@ -57,37 +59,62 @@
     "function-paren-newline": [0, "multiline"],
 
     // Warning
-    "no-console": 1,
-    "no-debugger": 1,
-    "no-undef": 1,
-    "no-unreachable": 1,
-    "no-unused-vars": [1, { "vars": "all", "args": "after-used" }],
+    "array-callback-return": 1,
+    "curly": [1, "all"],
+    "eqeqeq": [1, "always"],
+    "linebreak-style": [1, "unix"],
+    "lines-between-class-members": [1, "always", {"exceptAfterSingleLine": true}],
+    "line-comment-position": [1, "above"],
     "newline-after-var": [1, "always"],
     "newline-before-return": 1,
-    "prefer-arrow-callback": 1,
-    "prefer-const": 1,
-    "no-multi-assign": 1,
-    "no-warning-comments": [1, { "terms": ["fixme", "todo", "hack", "review", "xxx"] }],
-    "no-useless-constructor": 1,
-
-    "linebreak-style": [1, "unix"],
+    "no-console": 1,
+    "no-debugger": 1,
     "no-else-return": 1,
-    "curly": [1, "all"],
     "no-inline-comments": 1,
-    "spaced-comment": [1, "always", { "exceptions": ["-"] }],
-    "no-nested-ternary": 1,
-    "no-unneeded-ternary": [1, { "defaultAssignment": false }],
-    "no-var": 1,
-    "eqeqeq": [1, "always"],
-    "no-return-assign": 1,
+    "no-multi-assign": 1,
     "no-multi-str": 1,
+    "no-nested-ternary": 1,
+    "no-return-assign": 1,
+    "no-undef": 1,
+    "no-unneeded-ternary": [1, { "defaultAssignment": false }],
+    "no-unreachable": 1,
+    "no-unused-vars": [1, { "vars": "all", "args": "after-used" }],
+    "no-useless-constructor": 1,
+    "no-var": 1,
+    "no-warning-comments": [1, { "terms": ["fixme", "todo", "hack", "review", "xxx"] }],
     "padding-line-between-statements": [
       1,
       { "blankLine": "always", "prev": "*", "next": "return" },
       { "blankLine": "always", "prev": ["const", "let"], "next": "*"},
       { "blankLine": "any",    "prev": ["const", "let"], "next": ["const", "let"]}
     ],
+    "prefer-arrow-callback": 1,
+    "prefer-const": 1,
+    "spaced-comment": [1, "always", { "exceptions": ["-"] }],
+
+    // eslint-plugin-promise
+    "promise/catch-or-return": 1,
+    "promise/no-return-wrap": 1,
+    "promise/param-names": 1,
+    "promise/always-return": 0,
+    "promise/no-native": 1,
+    "promise/no-nesting": 1,
+    "promise/no-promise-in-callback": 0,
+    "promise/no-callback-in-promise": 0,
+    "promise/avoid-new": 0,
+    "promise/no-return-in-finally": 1,
 
     "strict": [1, "global"]
-  }
+  },
+
+  // Override config (only applied to files that match the given globs)
+  "overrides": [
+    // Test files
+    {
+      "files": ["**/*.spec.js"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }
