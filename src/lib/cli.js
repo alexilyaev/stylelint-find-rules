@@ -12,8 +12,6 @@ const EOL = require('os').EOL;
 const pkg = require('../../package.json');
 const isDDeprecated = require('./is-deprecated');
 
-const explorer = cosmiconfig('stylelint');
-
 const rules = {
   stylelintAll: Object.keys(stylelint.rules),
   stylelintDeprecated: [],
@@ -336,10 +334,19 @@ function printTimingAndExit(startTime) {
  */
 function init() {
   const startTime = time();
+  const cosmicOpts = {};
 
   process.on('unhandledRejection', handleError);
 
+  // cosmiconfig no longer supports --config flag
+  if (argv.config) {
+    cosmicOpts.configPath = argv.config;
+  }
+
+  const explorer = cosmiconfig('stylelint', cosmicOpts);
+
   explorer
+    // Ref: https://github.com/davidtheclark/cosmiconfig#loadsearchpath-configpath
     .load(process.cwd())
     .then(validate)
     .then(getUserRules)

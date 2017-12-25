@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node index.js",
     "fail": "node index.js --config tests/configs/deprecated-and-new.config.js",
-
     "base-prettier": "prettier --ignore-path .gitignore",
     "base-eslint": "eslint --ignore-path .gitignore",
     "format": "npm run base-eslint -- --fix \"**/*.js\" && npm run base-prettier -- --write \"**/*.js\"",
@@ -35,12 +34,12 @@
     "bluebird": "3.5.1",
     "chalk": "2.3.0",
     "columnify": "1.5.4",
-    "cosmiconfig": "2.2.2",
+    "cosmiconfig": "3.1.0",
     "lodash": "4.17.4",
-    "yargs": "9.0.1"
+    "yargs": "10.0.3"
   },
   "devDependencies": {
-    "babel-eslint": "8.1.0",
+    "babel-eslint": "8.1.1",
     "eslint": "4.14.0",
     "eslint-config-prettier": "2.9.0",
     "eslint-plugin-promise": "3.6.0",
@@ -49,9 +48,9 @@
     "lint-staged": "6.0.0",
     "prettier": "1.9.2",
     "prettier-eslint-cli": "4.7.0",
-    "stylelint": "8.1.1",
-    "stylelint-config-recommended": "1.0.0",
-    "stylelint-config-standard": "17.0.0"
+    "stylelint": "8.4.0",
+    "stylelint-config-recommended": "2.0.1",
+    "stylelint-config-standard": "18.0.0"
   },
   "peerDependencies": {
     "stylelint": ">=7.0.0"

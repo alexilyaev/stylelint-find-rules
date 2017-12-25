@@ -8,7 +8,6 @@ stylelint-find-rules
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-
 Find [stylelint](https://github.com/stylelint/stylelint) rules that are not configured in your stylelint config.
 
 > Inspired by [eslint-find-rules](https://github.com/sarbbottam/eslint-find-rules)
@@ -90,7 +89,7 @@ to find your config data, so if stylelint works for you, this should too.
 
 ### Custom config file
 
-cosmiconfig supports a `--config` flag, so you can do:
+We support a `--config` flag and pass it to cosmiconfig as `configPath` option, so you can do:
 
 ```
 ./node_modules/.bin/stylelint-find-rules --config my-custom-config.js
@@ -99,7 +98,7 @@ cosmiconfig supports a `--config` flag, so you can do:
 ### How does it handle `extends`?
 
 The rules of `extends` are added to the list of configured rules, thus, if a rule is covered in an
-extend config, it will not show up in the results.  
+extend config, it will not show up in the `unused` results.
 
 Contributing
 --------------
