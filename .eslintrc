@@ -2,12 +2,14 @@
   "root": true,
 
   "plugins": [
-    "promise"
+    "promise",
+    "lodash"
   ],
 
   "extends": [
     "eslint:recommended",
-    "prettier"
+    "prettier",
+    "plugin:lodash/recommended"
   ],
 
   "env": {
@@ -103,6 +105,10 @@
     "promise/no-callback-in-promise": 0,
     "promise/avoid-new": 0,
     "promise/no-return-in-finally": 1,
+
+    // eslint-plugin-lodash
+    "lodash/chaining": 0,
+    "lodash/import-scope": [1, "full"],
 
     "strict": [1, "global"]
   },

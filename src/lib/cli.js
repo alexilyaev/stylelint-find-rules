@@ -13,7 +13,7 @@ const pkg = require('../../package.json');
 const isDDeprecated = require('./is-deprecated');
 
 const rules = {
-  stylelintAll: Object.keys(stylelint.rules),
+  stylelintAll: _.keys(stylelint.rules),
   stylelintDeprecated: [],
   stylelintNoDeprecated: [],
   userRulesNames: []
@@ -147,16 +147,16 @@ function validate(cosmiconfig) {
  * Gather rules from `extends` as well
  */
 function getUserRules(config) {
-  let rulesNames = Object.keys(config.rules);
+  let rulesNames = _.keys(config.rules);
 
   // Handle extends
   if (config.extends) {
-    const normalizedExtends = Array.isArray(config.extends) ? config.extends : [config.extends];
+    const normalizedExtends = _.isArray(config.extends) ? config.extends : [config.extends];
 
-    normalizedExtends.forEach(extendName => {
+    _.forEach(normalizedExtends, extendName => {
       // Get the `extends` config file
       const configData = require(extendName);
-      const extendRulesNames = Object.keys(configData.rules);
+      const extendRulesNames = _.keys(configData.rules);
 
       rulesNames = rulesNames.concat(extendRulesNames);
     });
@@ -175,10 +175,11 @@ function findDeprecatedStylelintRules() {
     return Promise.resolve();
   }
 
-  const isDeprecatedPromises = rules.stylelintAll.map(isDDeprecated);
+  const isDeprecatedPromises = _.map(rules.stylelintAll, isDDeprecated);
 
   return Promise.all(isDeprecatedPromises).then(rulesIsDeprecated => {
-    rules.stylelintDeprecated = rules.stylelintAll.filter(
+    rules.stylelintDeprecated = _.filter(
+      rules.stylelintAll,
       (rule, index) => rulesIsDeprecated[index]
     );
 
@@ -211,7 +212,7 @@ function printUserCurrent() {
   }
 
   const heading = chalk.blue.underline('CURRENT: Currently configured user rules:');
-  const rulesToPrint = rules.userRulesNames.map(rule => {
+  const rulesToPrint = _.map(rules.userRulesNames, rule => {
     return {
       rule,
       url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
@@ -230,7 +231,7 @@ function printAllAvailable() {
   }
 
   const heading = chalk.blue.underline('AVAILABLE: All available stylelint rules:');
-  const rulesToPrint = rules.stylelintAll.map(rule => {
+  const rulesToPrint = _.map(rules.stylelintAll, rule => {
     return {
       rule,
       url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
@@ -255,7 +256,7 @@ function printConfiguredUnavailable() {
   }
 
   const heading = chalk.red.underline('INVALID: Configured rules that are no longer available:');
-  const rulesToPrint = configuredUnavailable.map(rule => {
+  const rulesToPrint = _.map(configuredUnavailable, rule => {
     return {
       rule: chalk.redBright(rule)
     };
@@ -279,7 +280,7 @@ function printUserDeprecated() {
   }
 
   const heading = chalk.red.underline('DEPRECATED: Configured rules that are deprecated:');
-  const rulesToPrint = userDeprecated.map(rule => {
+  const rulesToPrint = _.map(userDeprecated, rule => {
     return {
       rule: chalk.redBright(rule),
       url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
@@ -307,7 +308,7 @@ function printUserUnused() {
     return;
   }
 
-  const rulesToPrint = userUnconfigured.map(rule => {
+  const rulesToPrint = _.map(userUnconfigured, rule => {
     return {
       rule,
       url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
