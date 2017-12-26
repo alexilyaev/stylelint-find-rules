@@ -48,7 +48,6 @@
     "jest": "21.2.1",
     "lint-staged": "6.0.0",
     "prettier": "1.9.2",
-    "prettier-eslint-cli": "4.7.0",
     "stylelint": "8.4.0",
     "stylelint-config-recommended": "2.0.1",
     "stylelint-config-standard": "18.0.0"
