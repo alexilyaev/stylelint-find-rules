@@ -10,21 +10,25 @@
     "base-eslint": "eslint --ignore-path .gitignore",
     "format": "npm run base-eslint -- --fix \"**/*.js\" && npm run base-prettier -- --write \"**/*.js\"",
     "lint-prettier": "npm run base-prettier -- -l \"**/*.js\"",
-    "lint-eslint": "npm run base-eslint -- --max-warnings 0 \"**/*.js\"",
+    "lint-eslint": "npm run base-eslint -- --rule 'no-console: 1' --max-warnings 0 \"**/*.js\"",
     "lint-eslint-config-prettier": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint": "npm run lint-eslint-config-prettier && npm run lint-prettier && npm run lint-eslint",
     "test": "jest ./src",
-    "test-e2e": "jest ./e2e",
+    "test-e2e": "jest --runInBand ./e2e",
     "test-watch": "npm run test -- --watch --notify",
     "test-coverage": "npm run test -- --coverage",
     "test-ci": "npm run test-coverage && npm run test-e2e",
+    "lint-staged-stash": "git diff --ignore-submodules --binary --no-color --no-ext-diff > lint-staged.diff && git checkout . && true",
+    "lint-staged-unstash": "git apply --whitespace=nowarn lint-staged.diff && rm -f lint-staged.diff && true",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.js": [
+      "lint-staged-stash",
       "base-eslint --fix --max-warnings 0",
       "base-prettier --write",
-      "git add"
+      "git add",
+      "lint-staged-unstash"
     ]
   },
   "bin": {

@@ -69,7 +69,8 @@
     "line-comment-position": [1, "above"],
     "newline-after-var": [1, "always"],
     "newline-before-return": 1,
-    "no-console": 1,
+    "no-console": 0,
+    "no-constant-condition": [1, {"checkLoops": false}],
     "no-debugger": 1,
     "no-else-return": 1,
     "no-inline-comments": 1,
@@ -111,6 +112,10 @@
     // eslint-plugin-lodash
     "lodash/chaining": 0,
     "lodash/import-scope": [1, "full"],
+    "lodash/prefer-lodash-method": [1, {
+      "ignoreMethods": ["reverse", "replace", "split", "to(Lower|Upper)Case", "trim"],
+      "ignoreObjects": ["Promise", "$"]
+    }],
 
     "strict": [1, "global"]
   },
