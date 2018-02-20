@@ -9,7 +9,8 @@
   "extends": [
     "eslint:recommended",
     "prettier",
-    "plugin:lodash/recommended"
+    "plugin:lodash/recommended",
+    "plugin:jest/recommended"
   ],
 
   "env": {
@@ -97,6 +98,8 @@
     "prefer-const": 1,
     "spaced-comment": [1, "always", { "exceptions": ["-"] }],
 
+    "strict": [1, "global"],
+
     // eslint-plugin-promise
     "promise/catch-or-return": 1,
     "promise/no-return-wrap": 1,
@@ -118,7 +121,14 @@
       "ignoreObjects": ["Promise", "$"]
     }],
 
-    "strict": [1, "global"]
+    // eslint-plugin-jest
+    "jest/consistent-test-it": 1,
+    "jest/no-large-snapshots": 1,
+    "jest/prefer-to-be-null": 1,
+    "jest/prefer-to-be-undefined": 1,
+    "jest/prefer-expect-assertions": 0,
+    "jest/valid-describe": 1,
+    "jest/valid-expect-in-promise": 1
   },
 
   // Override config (only applied to files that match the given globs)
