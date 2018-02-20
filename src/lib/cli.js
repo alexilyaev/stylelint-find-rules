@@ -59,7 +59,7 @@ const argv = yargs
     describe: 'Find all available stylelint rules'
   })
   .option('config', {
-    describe: 'Optional, path to a custom config file (used by cosmiconfig)'
+    describe: 'Optional, path to a custom config file (passed as `configPath` to cosmiconfig)'
   })
   .help('h')
   .alias('h', 'help')
@@ -183,8 +183,8 @@ function findDeprecatedStylelintRules() {
       (rule, index) => rulesIsDeprecated[index]
     );
 
-    // Don't remove, just for QA
-    if (argv.qa) {
+    // Don't remove, just for testing deprecated rules matching
+    if (argv.testDeprecated) {
       rules.stylelintDeprecated.push('color-hex-case', 'color-hex-length');
     }
 

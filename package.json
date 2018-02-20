@@ -19,7 +19,7 @@
     "test-coverage": "npm run test -- --coverage",
     "test-ci": "npm run test-coverage && npm run test-e2e",
     "lint-staged-stash": "git diff --ignore-submodules --binary --no-color --no-ext-diff > lint-staged.diff && git checkout . && true",
-    "lint-staged-unstash": "git apply --whitespace=nowarn lint-staged.diff && rm -f lint-staged.diff && true",
+    "lint-staged-unstash": "[ -s lint-staged.diff ] && git apply --whitespace=nowarn lint-staged.diff; rm -f lint-staged.diff && true",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -36,25 +36,25 @@
   },
   "dependencies": {
     "bluebird": "3.5.1",
-    "chalk": "2.3.0",
+    "chalk": "2.3.1",
     "columnify": "1.5.4",
-    "cosmiconfig": "3.1.0",
-    "lodash": "4.17.4",
-    "yargs": "10.0.3"
+    "cosmiconfig": "4.0.0",
+    "lodash": "4.17.5",
+    "yargs": "11.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "8.1.1",
-    "eslint": "4.14.0",
+    "babel-eslint": "8.2.2",
+    "eslint": "4.18.0",
     "eslint-config-prettier": "2.9.0",
-    "eslint-plugin-lodash": "2.5.0",
+    "eslint-plugin-lodash": "2.6.1",
     "eslint-plugin-promise": "3.6.0",
     "husky": "0.14.3",
-    "jest": "21.2.1",
-    "lint-staged": "6.0.0",
-    "prettier": "1.9.2",
-    "stylelint": "8.4.0",
-    "stylelint-config-recommended": "2.0.1",
-    "stylelint-config-standard": "18.0.0"
+    "jest": "22.4.0",
+    "lint-staged": "6.1.1",
+    "prettier": "1.10.2",
+    "stylelint": "9.0.0",
+    "stylelint-config-recommended": "2.1.0",
+    "stylelint-config-standard": "18.1.0"
   },
   "peerDependencies": {
     "stylelint": ">=7.0.0"

@@ -1,5 +1,4 @@
-stylelint-find-rules
-======================
+# stylelint-find-rules
 
 [![Build Status](https://circleci.com/gh/alexilyaev/stylelint-find-rules.svg?&style=shield&circle-token=7fa54818dd54da41bad761661259992a74e50c7a)](https://circleci.com/gh/alexilyaev/stylelint-find-rules)
 [![version](https://img.shields.io/npm/v/stylelint-find-rules.svg?style=flat-square)](http://npm.im/stylelint-find-rules)
@@ -12,13 +11,11 @@ Find [stylelint](https://github.com/stylelint/stylelint) rules that are not conf
 
 > Inspired by [eslint-find-rules](https://github.com/sarbbottam/eslint-find-rules)
 
-Example Output
------------------
+## Example Output
 
 ![Example](example.png)
 
-Installation
--------------
+## Installation
 
 Install as a dev dependency of your project:
 
@@ -32,11 +29,10 @@ Or with `npm`
 npm i -D stylelint-find-rules
 ```
 
-Usage
-------
+## Usage
 
-This package requires `stylelint` to be installed in the project, as it will search for available
-rules from that package.
+This package requires `stylelint` to be already installed in the project, as it will search for
+available rules from that package.
 
 ### npm script
 
@@ -52,6 +48,14 @@ rules from that package.
 
 ### Command line
 
+Using `npx`:
+
+```
+npx stylelint-find-rules
+```
+
+Or the old way:
+
 ```
 ./node_modules/.bin/stylelint-find-rules
 ```
@@ -63,9 +67,10 @@ stylelint-find-rules [options]
 
 General:
   -h, --help  Show help                                                                    [boolean]
-  --config    Optional, path to a custom config file (used by cosmiconfig)
+  --config    Optional, path to a custom config file (passed as `configPath` to cosmiconfig)
 
 Options:
+  --version         Show version number                                                    [boolean]
   -u, --unused      Find available rules that are not configured
                     To disable, set to false or use --no-u                 [boolean] [default: true]
   -d, --deprecated  Find deprecated configured rules
@@ -81,15 +86,12 @@ Examples:
   stylelint-find-rules --config path/to/custom.config.js
 ```
 
-Supported configs
-------------------
+## Supported configs
 
 Just like stylelint, this package uses [cosmiconfig](https://github.com/davidtheclark/cosmiconfig)
 to find your config data, so if stylelint works for you, this should too.
 
 ### Custom config file
-
-We support a `--config` flag and pass it to cosmiconfig as `configPath` option, so you can do:
 
 ```
 ./node_modules/.bin/stylelint-find-rules --config my-custom-config.js
@@ -100,7 +102,6 @@ We support a `--config` flag and pass it to cosmiconfig as `configPath` option, 
 The rules of `extends` are added to the list of configured rules, thus, if a rule is covered in an
 extend config, it will not show up in the `unused` results.
 
-Contributing
---------------
+## Contributing
 
 See the [CONTRIBUTING](CONTRIBUTING.md) document.

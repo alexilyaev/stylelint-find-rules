@@ -13,7 +13,8 @@ module.exports = {
     // 'at-rule-name-space-after': 'always',
     // 'at-rule-no-unknown': true,
 
-    // Simulate set rules that are deprecated (requires `--qa` flag to work)
+    // Simulate set rules that are deprecated
+    // Requires `--test-deprecated` flag to work, since there are no actual deprecated rules at the moment
     'color-hex-case': 'lower',
     'color-hex-length': 'short',
 
