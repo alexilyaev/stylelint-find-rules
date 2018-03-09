@@ -13,7 +13,7 @@
     "lint-eslint": "npm run base-eslint -- --rule 'no-console: 1' --max-warnings 0 \"**/*.js\"",
     "lint-eslint-config-prettier": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "lint": "npm run lint-eslint-config-prettier && npm run lint-prettier && npm run lint-eslint",
-    "eslint-find-rules": "eslint-find-rules -u -p --no-core .eslintrc",
+    "eslint-find-rules": "eslint-find-rules -u -p .eslintrc --no-core",
     "test": "jest ./src",
     "test-e2e": "jest --runInBand ./e2e",
     "test-watch": "npm run test -- --watch --notify",
