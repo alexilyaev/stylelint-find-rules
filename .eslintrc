@@ -7,7 +7,7 @@
   ],
 
   "extends": [
-    "eslint:recommended",
+//    "eslint:recommended",
     "prettier",
     "plugin:lodash/recommended",
     "plugin:jest/recommended"
