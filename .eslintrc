@@ -88,6 +88,7 @@
     "no-var": 1,
     "no-warning-comments": [1, { "terms": ["fixme", "todo", "hack", "review", "xxx"] }],
     "no-return-await": 1,
+    "no-throw-literal": 1,
     "require-await": 1,
     "padding-line-between-statements": [
       1,
@@ -98,8 +99,6 @@
     "prefer-arrow-callback": 1,
     "prefer-const": 1,
     "spaced-comment": [1, "always", { "exceptions": ["-"] }],
-
-    "strict": [1, "global"],
 
     // eslint-plugin-promise
     "promise/always-return": 0,
@@ -136,7 +135,9 @@
     "jest/prefer-to-be-undefined": 1,
     "jest/prefer-expect-assertions": 0,
     "jest/valid-describe": 1,
-    "jest/valid-expect-in-promise": 1
+    "jest/valid-expect-in-promise": 1,
+
+    "strict": [1, "global"]
   },
 
   // Override config (only applied to files that match the given globs)
