@@ -3,7 +3,6 @@
 const _ = require('lodash');
 const cosmiconfig = require('cosmiconfig');
 const columnify = require('columnify');
-const stylelint = require('stylelint');
 const chalk = require('chalk');
 const yargs = require('yargs');
 const Promise = require('bluebird');
@@ -13,11 +12,13 @@ const pkg = require('../../package.json');
 const isDDeprecated = require('./is-deprecated');
 
 const rules = {
-  stylelintAll: _.keys(stylelint.rules),
+  stylelintAll: [],
   stylelintDeprecated: [],
   stylelintNoDeprecated: [],
   userRulesNames: []
 };
+
+let userConfig = null;
 
 /**
  * Define command line arguments
@@ -139,19 +140,21 @@ function validate(cosmiconfig) {
     return process.exit(1);
   }
 
-  return cosmiconfig.config;
+  userConfig = cosmiconfig.config;
 }
 
 /**
  * Get user rules
  * Gather rules from `extends` as well
  */
-function getUserRules(config) {
-  let rulesNames = _.keys(config.rules);
+function getUserRules() {
+  let rulesNames = _.keys(userConfig.rules);
 
   // Handle extends
-  if (config.extends) {
-    const normalizedExtends = _.isArray(config.extends) ? config.extends : [config.extends];
+  if (userConfig.extends) {
+    const normalizedExtends = _.isArray(userConfig.extends)
+      ? userConfig.extends
+      : [userConfig.extends];
 
     _.forEach(normalizedExtends, extendName => {
       // Get the `extends` config file
@@ -350,6 +353,18 @@ function init() {
     // Ref: https://github.com/davidtheclark/cosmiconfig#loadsearchpath-configpath
     .load(process.cwd())
     .then(validate)
+    // .then(() => {
+    //   const { getInstalledPath } = require('get-installed-path');
+    //
+    //   return getInstalledPath('stylelint', {
+    //     // local: true
+    //   }).then(path => {
+    //     console.log(path);
+    //     // => '/home/charlike/.nvm/path/to/lib/node_modules/npm'
+    //
+    //     // rules.stylelintAll = .keys(stylelint.rules)
+    //   });
+    // })
     .then(getUserRules)
     .then(findDeprecatedStylelintRules)
     .then(printBegin)
