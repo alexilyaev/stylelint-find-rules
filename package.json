@@ -17,18 +17,18 @@
     "test-e2e": "jest --runInBand ./e2e",
     "test-watch": "npm run test -- --watch --notify",
     "test-coverage": "npm run test -- --coverage",
-    "test-ci": "npm run test-coverage && npm run test-e2e",
-    "lint-staged-stash": "git diff --ignore-submodules --binary --no-color --no-ext-diff > lint-staged.diff && git checkout . && true",
-    "lint-staged-unstash": "[ -s lint-staged.diff ] && git apply --whitespace=nowarn lint-staged.diff; rm -f lint-staged.diff && true",
-    "precommit": "lint-staged"
+    "test-ci": "npm run test-coverage && npm run test-e2e"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "*.js": [
-      "lint-staged-stash",
-      "base-eslint --fix --max-warnings 0",
-      "base-prettier --write",
-      "git add",
-      "lint-staged-unstash"
+      "npm run base-eslint --fix --max-warnings 0",
+      "npm run base-prettier --write",
+      "git add"
     ]
   },
   "bin": {
@@ -50,9 +50,9 @@
     "eslint-plugin-jest": "21.14.0",
     "eslint-plugin-lodash": "2.6.1",
     "eslint-plugin-promise": "3.7.0",
-    "husky": "0.14.3",
+    "husky": "1.2.0",
     "jest": "22.4.2",
-    "lint-staged": "7.0.0",
+    "lint-staged": "8.1.0",
     "prettier": "1.11.1",
     "stylelint": "9.1.1",
     "stylelint-config-recommended": "2.1.0",
