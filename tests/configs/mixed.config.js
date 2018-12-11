@@ -1,26 +1,26 @@
 'use strict';
 
 module.exports = {
-  extends: ['stylelint-config-recommended', 'stylelint-config-standard'],
+  extends: [
+    'stylelint-config-standard',
+    './extends-recommended.config.js',
+    './invalid-rules.config.js'
+  ],
 
   rules: {
     // Simulate unset available rules
     // 'at-rule-blacklist': null,
     // 'at-rule-name-newline-after': null,
 
-    // Simulate unset rules covered by extends
+    // Simulate unset rules covered by extends (comment out the extends to check)
     // 'at-rule-name-case': 'lower',
     // 'at-rule-name-space-after': 'always',
     // 'at-rule-no-unknown': true,
 
-    // Simulate set rules that are deprecated
+    // Simulate set rules that are deprecated (hard coded in `findDeprecatedStylelintRules`)
     // Requires `--test-deprecated` flag to work, since there are no actual deprecated rules at the moment
     'color-hex-case': 'lower',
     'color-hex-length': 'short',
-
-    // Simulate set rules that are not available at all
-    'some-bogus-rule': true,
-    'some-other-bogus-rule': true,
 
     'at-rule-empty-line-before': [
       'always',
@@ -57,6 +57,7 @@ module.exports = {
     'custom-property-pattern': null,
     'font-family-name-quotes': 'always-where-recommended',
     'font-family-no-duplicate-names': true,
+    'font-family-no-missing-generic-family-keyword': true,
     'font-weight-notation': null,
     'function-blacklist': null,
     'function-calc-no-unspaced-operator': true,
@@ -88,7 +89,7 @@ module.exports = {
         ignore: ['inside-parens']
       }
     ],
-    'number-leading-zero': 'never',
+    'number-leading-zero': 'always',
     'number-max-precision': null,
     'number-no-trailing-zeros': true,
     'string-no-newline': true,
@@ -168,6 +169,8 @@ module.exports = {
         message: 'Class names should be dash-cased. Pattern: "^[a-z0-9\\-]+$"'
       }
     ],
+    'selector-combinator-blacklist': null,
+    'selector-combinator-whitelist': null,
     'selector-attribute-operator-blacklist': null,
     'selector-attribute-operator-whitelist': null,
     'selector-combinator-space-after': 'always',
@@ -195,6 +198,8 @@ module.exports = {
     'selector-pseudo-class-parentheses-space-inside': 'never',
     'selector-pseudo-class-blacklist': null,
     'selector-pseudo-class-whitelist': null,
+    'selector-pseudo-element-blacklist': null,
+    'selector-pseudo-element-whitelist': null,
     'selector-pseudo-element-case': 'lower',
     'selector-pseudo-element-colon-notation': 'double',
     'selector-pseudo-element-no-unknown': true,
@@ -225,6 +230,7 @@ module.exports = {
     'max-line-length': 100,
     'max-nesting-depth': null,
     'no-descending-specificity': true,
+    'no-duplicate-at-import-rules': true,
     'no-duplicate-selectors': true,
     'no-empty-source': true,
     'no-eol-whitespace': true,

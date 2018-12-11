@@ -24,9 +24,9 @@ const rules = {
  */
 const argv = yargs
   .usage('stylelint-find-rules [options]')
-  .example('stylelint-find-rules')
-  .example('stylelint-find-rules --no-d --no-i')
-  .example('stylelint-find-rules --config path/to/custom.config.js')
+  .example('stylelint-find-rules', '')
+  .example('stylelint-find-rules --no-d --no-i', '')
+  .example('stylelint-find-rules --config path/to/custom.config.js', '')
   .option('u', {
     type: 'boolean',
     alias: 'unused',
@@ -132,37 +132,45 @@ function validate(cosmiconfig) {
     return process.exit(1);
   }
 
-  if (!argv.unused && !argv.deprecated && !argv.current && !argv.available) {
+  if (!argv.unused && !argv.deprecated && !argv.invalid && !argv.current && !argv.available) {
     printColumns(chalk.red(`Oops, one of the command line Options must be set...${EOL}`));
     yargs.showHelp();
 
     return process.exit(1);
   }
 
-  return cosmiconfig.config;
+  return cosmiconfig;
 }
 
 /**
  * Get user rules
  * Gather rules from `extends` as well
  */
-function getUserRules(config) {
-  let rulesNames = _.keys(config.rules);
+function getUserRules(cosmiconfig) {
+  const userConfig = cosmiconfig.config;
+  const configPath = cosmiconfig.filepath;
 
-  // Handle extends
-  if (config.extends) {
-    const normalizedExtends = _.isArray(config.extends) ? config.extends : [config.extends];
+  return (
+    Promise.resolve()
+      // Handle `extends`
+      .then(() => {
+        // If `extends` is defined, use stylelint's extends resolver
+        if (!_.isEmpty(userConfig.extends)) {
+          // We need this to fetch and merge all `extends` from the provided config
+          // This will also merge the `rules` on top of the `extends` rules
+          const linter = stylelint.createLinter();
 
-    _.forEach(normalizedExtends, extendName => {
-      // Get the `extends` config file
-      const configData = require(extendName);
-      const extendRulesNames = _.keys(configData.rules);
+          // stylelint used cosmiconfig v4 at version 9, bumped to v5 somewhere 9.x
+          // So we pass both arguments to `load`, works in both versions
+          return linter._extendExplorer.load(configPath, configPath);
+        }
+      })
+      .then(extendedConfig => {
+        const finalConfig = extendedConfig ? extendedConfig.config : userConfig;
 
-      rulesNames = rulesNames.concat(extendRulesNames);
-    });
-  }
-
-  rules.userRulesNames = _.sortedUniq(rulesNames);
+        rules.userRulesNames = _.sortedUniq(_.keys(finalConfig.rules));
+      })
+  );
 }
 
 /**
@@ -335,20 +343,20 @@ function printTimingAndExit(startTime) {
  */
 function init() {
   const startTime = time();
-  const cosmicOpts = {};
 
   process.on('unhandledRejection', handleError);
 
-  // cosmiconfig no longer supports --config flag
+  const explorer = cosmiconfig('stylelint');
+  let configPromise;
+
   if (argv.config) {
-    cosmicOpts.configPath = argv.config;
+    // Ref: https://github.com/davidtheclark/cosmiconfig#explorerload
+    configPromise = explorer.load(argv.config);
+  } else {
+    configPromise = explorer.search();
   }
 
-  const explorer = cosmiconfig('stylelint', cosmicOpts);
-
-  explorer
-    // Ref: https://github.com/davidtheclark/cosmiconfig#loadsearchpath-configpath
-    .load(process.cwd())
+  configPromise
     .then(validate)
     .then(getUserRules)
     .then(findDeprecatedStylelintRules)
