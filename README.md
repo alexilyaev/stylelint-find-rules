@@ -67,7 +67,7 @@ stylelint-find-rules [options]
 
 General:
   -h, --help  Show help                                                                    [boolean]
-  --config    Optional, path to a custom config file (passed as `configPath` to cosmiconfig)
+  --config    Optional, path to a custom config file (passed to cosmiconfig)
 
 Options:
   --version         Show version number                                                    [boolean]

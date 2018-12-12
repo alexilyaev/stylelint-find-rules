@@ -59,7 +59,7 @@ const argv = yargs
     describe: 'Find all available stylelint rules'
   })
   .option('config', {
-    describe: 'Optional, path to a custom config file (passed as `configPath` to cosmiconfig)'
+    describe: 'Optional, path to a custom config file (passed to cosmiconfig)'
   })
   .help('h')
   .alias('h', 'help')
