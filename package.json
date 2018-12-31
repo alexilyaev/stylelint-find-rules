@@ -26,8 +26,8 @@
   },
   "lint-staged": {
     "*.js": [
-      "npm run base-eslint --fix --max-warnings 0",
-      "npm run base-prettier --write",
+      "npm run base-eslint -- --fix --max-warnings 0",
+      "npm run base-prettier -- --write",
       "git add"
     ]
   },
