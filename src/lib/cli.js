@@ -31,21 +31,21 @@ const argv = yargs
     type: 'boolean',
     alias: 'unused',
     describe: `Find available rules that are not configured
-               To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-u')}`,
+      To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-u')}`,
     default: true
   })
   .option('d', {
     type: 'boolean',
     alias: 'deprecated',
     describe: `Find deprecated configured rules
-               To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-d')}`,
+      To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-d')}`,
     default: true
   })
   .option('i', {
     type: 'boolean',
     alias: 'invalid',
     describe: `Find configured rules that are no longer available
-               To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-i')}`,
+      To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-i')}`,
     default: true
   })
   .option('c', {
@@ -90,7 +90,9 @@ function handleError(err) {
   printColumns(chalk.red('Error: ' + errMsg));
   printColumns(
     chalk.white(
-      "If you can't settle this, please open an issue at:" + EOL + chalk.cyan(pkg.bugs.url)
+      "If you can't settle this, please open an issue at:" +
+        EOL +
+        chalk.cyan(pkg.bugs.url)
     )
   );
   process.exit(1);
@@ -132,8 +134,16 @@ function validate(cosmiconfig) {
     return process.exit(1);
   }
 
-  if (!argv.unused && !argv.deprecated && !argv.invalid && !argv.current && !argv.available) {
-    printColumns(chalk.red(`Oops, one of the command line Options must be set...${EOL}`));
+  if (
+    !argv.unused &&
+    !argv.deprecated &&
+    !argv.invalid &&
+    !argv.current &&
+    !argv.available
+  ) {
+    printColumns(
+      chalk.red(`Oops, one of the command line Options must be set...${EOL}`)
+    );
     yargs.showHelp();
 
     return process.exit(1);
@@ -197,7 +207,10 @@ function findDeprecatedStylelintRules() {
     }
 
     if (argv.unused) {
-      rules.stylelintNoDeprecated = _.difference(rules.stylelintAll, rules.stylelintDeprecated);
+      rules.stylelintNoDeprecated = _.difference(
+        rules.stylelintAll,
+        rules.stylelintDeprecated
+      );
     }
 
     return rules.stylelintDeprecated;
@@ -219,7 +232,9 @@ function printUserCurrent() {
     return;
   }
 
-  const heading = chalk.blue.underline('CURRENT: Currently configured user rules:');
+  const heading = chalk.blue.underline(
+    'CURRENT: Currently configured user rules:'
+  );
   const rulesToPrint = _.map(rules.userRulesNames, rule => {
     return {
       rule,
@@ -238,7 +253,9 @@ function printAllAvailable() {
     return;
   }
 
-  const heading = chalk.blue.underline('AVAILABLE: All available stylelint rules:');
+  const heading = chalk.blue.underline(
+    'AVAILABLE: All available stylelint rules:'
+  );
   const rulesToPrint = _.map(rules.stylelintAll, rule => {
     return {
       rule,
@@ -257,13 +274,18 @@ function printConfiguredUnavailable() {
     return;
   }
 
-  const configuredUnavailable = _.difference(rules.userRulesNames, rules.stylelintAll);
+  const configuredUnavailable = _.difference(
+    rules.userRulesNames,
+    rules.stylelintAll
+  );
 
   if (!configuredUnavailable.length) {
     return;
   }
 
-  const heading = chalk.red.underline('INVALID: Configured rules that are no longer available:');
+  const heading = chalk.red.underline(
+    'INVALID: Configured rules that are no longer available:'
+  );
   const rulesToPrint = _.map(configuredUnavailable, rule => {
     return {
       rule: chalk.redBright(rule)
@@ -281,13 +303,18 @@ function printUserDeprecated() {
     return;
   }
 
-  const userDeprecated = _.intersection(rules.stylelintDeprecated, rules.userRulesNames);
+  const userDeprecated = _.intersection(
+    rules.stylelintDeprecated,
+    rules.userRulesNames
+  );
 
   if (!userDeprecated.length) {
     return;
   }
 
-  const heading = chalk.red.underline('DEPRECATED: Configured rules that are deprecated:');
+  const heading = chalk.red.underline(
+    'DEPRECATED: Configured rules that are deprecated:'
+  );
   const rulesToPrint = _.map(userDeprecated, rule => {
     return {
       rule: chalk.redBright(rule),
@@ -306,7 +333,10 @@ function printUserUnused() {
     return;
   }
 
-  const userUnconfigured = _.difference(rules.stylelintNoDeprecated, rules.userRulesNames);
+  const userUnconfigured = _.difference(
+    rules.stylelintNoDeprecated,
+    rules.userRulesNames
+  );
   let heading;
 
   if (!userUnconfigured.length) {
@@ -323,7 +353,9 @@ function printUserUnused() {
     };
   });
 
-  heading = chalk.blue.underline('UNUSED: Available rules that are not configured:');
+  heading = chalk.blue.underline(
+    'UNUSED: Available rules that are not configured:'
+  );
 
   printColumns(heading, rulesToPrint);
 }
