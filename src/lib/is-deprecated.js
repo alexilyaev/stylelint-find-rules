@@ -1,6 +1,5 @@
 'use strict';
 
-const path = require('path');
 const fs = require('fs');
 const Promise = require('bluebird');
 
@@ -19,7 +18,7 @@ function handleError(err) {
  */
 module.exports = function isDDeprecated(ruleName) {
   const target = `stylelint/lib/rules/${ruleName}/README.md`;
-  const filePath = path.resolve(process.cwd(), 'node_modules', target);
+  const filePath = require.resolve(target);
 
   // Limit the chunk size to get only the beginning of the file
   const readStream = fs.createReadStream(filePath, {
