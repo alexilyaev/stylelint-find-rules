@@ -11,7 +11,7 @@
     "format": "npm run base-eslint -- --fix \"**/*.js\" && npm run base-prettier -- --write \"**/*.js\"",
     "lint-prettier": "npm run base-prettier -- -l \"**/*.js\"",
     "lint-eslint": "npm run base-eslint -- --max-warnings 0 \"**/*.js\"",
-    "lint-eslint-config-prettier": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
+    "lint-eslint-config-prettier": "eslint --print-config .eslintrc | eslint-config-prettier-check",
     "lint": "npm run lint-eslint-config-prettier && npm run lint-prettier && npm run lint-eslint",
     "test": "jest ./src",
     "test-e2e": "jest --runInBand ./e2e",
