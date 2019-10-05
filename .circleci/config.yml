@@ -30,16 +30,16 @@ _defaults: &defaults
 version: 2
 jobs:
   build-10.16.1:
+    <<: *defaults
+
     docker:
       - image: circleci/node:10.16.1
-    steps:
-      <<: *defaults
 
   build-9.7:
+    <<: *defaults
+
     docker:
       - image: circleci/node:9.7
-
-    <<: *defaults
 
 workflows:
   version: 2
