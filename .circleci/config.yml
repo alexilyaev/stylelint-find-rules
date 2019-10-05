@@ -27,7 +27,7 @@ _defaults: &defaults
     # run linters!
     - run: npm run lint
 
-version: 2.1
+version: 2
 jobs:
   build-10.16.1:
     docker:
