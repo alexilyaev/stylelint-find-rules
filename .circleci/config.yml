@@ -2,34 +2,62 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+
 version: 2
+
+# YAML Anchors and Aliases
+# https://circleci.com/docs/2.0/writing-yaml/
+# https://circleci.com/blog/circleci-hacks-reuse-yaml-in-your-circleci-config-with-yaml/
+
+# Download and cache dependencies
+# https://circleci.com/docs/2.0/yarn/
+# https://circleci.com/docs/2.0/caching/
+_restore_yarn_cache: &restore_yarn_cache
+  keys:
+    - yarn-packages-{{ checksum "yarn.lock" }}
+
+_save_yarn_cache: &save_yarn_cache
+  key: yarn-packages-{{ checksum "yarn.lock" }}
+  paths:
+    - ~/.cache/yarn
+
+_defaults: &defaults
+  steps:
+    - run: node -v
+    - checkout
+    - restore_cache: *restore_yarn_cache
+    - run: yarn install --frozen-lockfile
+    - save_cache: *save_yarn_cache
+    - run: npm run lint
+
+# Setup
+
 jobs:
-  build:
+  node-latest:
+    <<: *defaults
+
     docker:
-      # specify the version you desire here
-      - image: circleci/node:9.6.1
+      - image: circleci/node:latest
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+  node-lts:
+    <<: *defaults
 
-    steps:
-      - checkout
+    docker:
+      - image: circleci/node:lts
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+  node-v8:
+    <<: *defaults
 
-      - run: yarn install
+    docker:
+      # Some tools depends on `execa` and it has specific node versions dependency:
+      # error execa@2.0.3: The engine "node" is incompatible with this module.
+      # Expected version "^8.12.0 || >=9.7.0".
+      - image: circleci/node:8.12
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run linters!
-      - run: yarn run lint
+workflows:
+  version: 2
+  node-multi-build:
+    jobs:
+      - node-latest
+      - node-lts
+      - node-v8
