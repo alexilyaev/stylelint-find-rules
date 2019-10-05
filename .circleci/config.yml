@@ -6,30 +6,50 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:9.6.1
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
+      - image: circleci/node:10.16.1
 
     steps:
       - checkout
 
       # Download and cache dependencies
+      # https://circleci.com/docs/2.0/yarn/
+      # https://circleci.com/docs/2.0/caching/
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - yarn-packages-{{ checksum "yarn.lock" }}
 
-      - run: yarn install
+      # Don’t generate a yarn.lock lockfile and fail if an update is needed.
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - ~/.cache/yarn
+
+      # run linters!
+      - run: yarn run lint
+
+  build2:
+    docker:
+      - image: circleci/node:9.6.0
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      # https://circleci.com/docs/2.0/yarn/
+      # https://circleci.com/docs/2.0/caching/
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+
+      # Don’t generate a yarn.lock lockfile and fail if an update is needed.
+      - run: yarn install --frozen-lockfile
+
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
 
       # run linters!
       - run: yarn run lint
