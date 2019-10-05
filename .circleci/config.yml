@@ -36,7 +36,7 @@ jobs:
       - image: circleci/node:10.16.1
 
     steps:
-      - echo "123"
+      - run: echo "123"
 
   build-9.7:
     <<: *defaults
