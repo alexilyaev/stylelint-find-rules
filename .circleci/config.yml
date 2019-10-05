@@ -32,21 +32,31 @@ _defaults: &defaults
 # Setup
 
 jobs:
-  node-v10:
+  node-latest:
     <<: *defaults
 
     docker:
-      - image: circleci/node:10.16.1
+      - image: circleci/node:latest
+
+  node-lts:
+    <<: *defaults
+
+    docker:
+      - image: circleci/node:lts
 
   node-v8:
     <<: *defaults
 
     docker:
-      - image: circleci/node:8.6.0
+      # Some tools depends on `execa` and it has specific node versions dependency:
+      # error execa@2.0.3: The engine "node" is incompatible with this module.
+      # Expected version "^8.12.0 || >=9.7.0".
+      - image: circleci/node:8.12
 
 workflows:
   version: 2
   node-multi-build:
     jobs:
-      - node-v10
+      - node-latest
+      - node-lts
       - node-v8
