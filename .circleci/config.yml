@@ -3,50 +3,50 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 
+version: 2
+
 # YAML Anchors and Aliases
+# https://circleci.com/docs/2.0/writing-yaml/
 # https://circleci.com/blog/circleci-hacks-reuse-yaml-in-your-circleci-config-with-yaml/
+
+# Download and cache dependencies
+# https://circleci.com/docs/2.0/yarn/
+# https://circleci.com/docs/2.0/caching/
+_restore_yarn_cache: &restore_yarn_cache
+  keys:
+    - yarn-packages-{{ checksum "yarn.lock" }}
+
+_save_yarn_cache: &save_yarn_cache
+  key: yarn-packages-{{ checksum "yarn.lock" }}
+  paths:
+    - ~/.cache/yarn
+
 _defaults: &defaults
   steps:
     - checkout
-
-    # Download and cache dependencies
-    # https://circleci.com/docs/2.0/yarn/
-    # https://circleci.com/docs/2.0/caching/
-    - restore_cache:
-        keys:
-          - yarn-packages-{{ checksum "yarn.lock" }}
-
-    # Don’t generate a yarn.lock lockfile and fail if an update is needed.
+    - restore_cache: *restore_yarn_cache
     - run: yarn install --frozen-lockfile
-
-    - save_cache:
-        key: yarn-packages-{{ checksum "yarn.lock" }}
-        paths:
-          - ~/.cache/yarn
-
-    # run linters!
+    - save_cache: *save_yarn_cache
     - run: npm run lint
 
-version: 2
+# Setup
+
 jobs:
-  build-10.16.1:
+  node-v10:
     <<: *defaults
 
     docker:
       - image: circleci/node:10.16.1
 
-    steps:
-      - run: echo "123"
-
-  build-9.7:
+  node-v8:
     <<: *defaults
 
     docker:
-      - image: circleci/node:9.7
+      - image: circleci/node:8.6.0
 
 workflows:
   version: 2
-  build:
+  node-multi-build:
     jobs:
-      - build-10.16.1
-      - build-9.7
+      - node-v10
+      - node-v8
