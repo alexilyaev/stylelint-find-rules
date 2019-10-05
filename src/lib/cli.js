@@ -12,6 +12,8 @@ const EOL = require('os').EOL;
 const pkg = require('../../package.json');
 const isDDeprecated = require('./is-deprecated');
 
+// Just a test comment
+
 const rules = {
   stylelintAll: _.keys(stylelint.rules),
   stylelintDeprecated: [],
