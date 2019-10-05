@@ -35,6 +35,9 @@ jobs:
     docker:
       - image: circleci/node:10.16.1
 
+    steps:
+      - echo "123"
+
   build-9.7:
     <<: *defaults
 
