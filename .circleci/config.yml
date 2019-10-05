@@ -2,57 +2,43 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+
+# YAML Anchors and Aliases
+# https://circleci.com/blog/persisting-data-in-workflows-when-to-use-caching-artifacts-and-workspaces/
+_defaults: &defaults
+  steps:
+    - checkout
+
+    # Download and cache dependencies
+    # https://circleci.com/docs/2.0/yarn/
+    # https://circleci.com/docs/2.0/caching/
+    - restore_cache:
+        keys:
+          - yarn-packages-{{ checksum "yarn.lock" }}
+
+    # Don’t generate a yarn.lock lockfile and fail if an update is needed.
+    - run: yarn install --frozen-lockfile
+
+    - save_cache:
+        key: yarn-packages-{{ checksum "yarn.lock" }}
+        paths:
+          - ~/.cache/yarn
+
+    # run linters!
+    - run: npm run lint
+
+version: 2.1
 jobs:
   build-10.16.1:
     docker:
       - image: circleci/node:10.16.1
-
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      # https://circleci.com/docs/2.0/yarn/
-      # https://circleci.com/docs/2.0/caching/
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-
-      # Don’t generate a yarn.lock lockfile and fail if an update is needed.
-      - run: yarn install --frozen-lockfile
-
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-
-      # run linters!
-      - run: npm run lint
+    <<: *defaults
 
   build-9.7:
     docker:
       - image: circleci/node:9.7
 
-    steps:
-      - checkout
-
-      # Download and cache dependencies
-      # https://circleci.com/docs/2.0/yarn/
-      # https://circleci.com/docs/2.0/caching/
-      - restore_cache:
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-
-      # Don’t generate a yarn.lock lockfile and fail if an update is needed.
-      - run: yarn install --frozen-lockfile
-
-      - save_cache:
-          key: yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-
-      # run linters!
-      - run: npm run lint
+    <<: *defaults
 
 workflows:
   version: 2
