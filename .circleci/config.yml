@@ -27,7 +27,7 @@ jobs:
             - ~/.cache/yarn
 
       # run linters!
-      - run: yarn run lint
+      - run: npm run lint
 
   build2:
     docker:
@@ -52,4 +52,4 @@ jobs:
             - ~/.cache/yarn
 
       # run linters!
-      - run: yarn run lint
+      - run: npm run lint
