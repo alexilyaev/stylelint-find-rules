@@ -4,9 +4,9 @@
 #
 
 # YAML Anchors and Aliases
-# https://circleci.com/blog/persisting-data-in-workflows-when-to-use-caching-artifacts-and-workspaces/
+# https://circleci.com/blog/circleci-hacks-reuse-yaml-in-your-circleci-config-with-yaml/
 _defaults: &defaults
-  steps: &steps
+  steps:
     - checkout
 
     # Download and cache dependencies
@@ -27,19 +27,13 @@ _defaults: &defaults
     # run linters!
     - run: npm run lint
 
-_partial_list: &partial_list
-  - echo "one"
-  - echo "two"
-  - echo "three"
-
 version: 2
 jobs:
   build-10.16.1:
     docker:
       - image: circleci/node:10.16.1
     steps:
-      - *steps
-      - *partial_list
+      <<: *defaults
 
   build-9.7:
     docker:
