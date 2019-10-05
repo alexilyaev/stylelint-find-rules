@@ -23,6 +23,7 @@ _save_yarn_cache: &save_yarn_cache
 
 _defaults: &defaults
   steps:
+    - run: node -v
     - checkout
     - restore_cache: *restore_yarn_cache
     - run: yarn install --frozen-lockfile
