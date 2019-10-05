@@ -29,9 +29,9 @@ jobs:
       # run linters!
       - run: npm run lint
 
-  build-9.7.0:
+  build-9.7:
     docker:
-      - image: circleci/node:9.7.0
+      - image: circleci/node:9.7
 
     steps:
       - checkout
@@ -59,4 +59,4 @@ workflows:
   build:
     jobs:
       - build-10.16.1
-      - build-9.7.0
+      - build-9.7
