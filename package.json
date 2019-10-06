@@ -11,13 +11,11 @@
     "format": "npm run base-eslint -- --fix \"**/*.js\" && npm run base-prettier -- --write \"**/*.js\"",
     "lint-prettier": "npm run base-prettier -- -l \"**/*.js\"",
     "lint-eslint": "npm run base-eslint -- --max-warnings 0 \"**/*.js\"",
-    "lint-eslint-config-prettier": "eslint --print-config .eslintrc | eslint-config-prettier-check",
-    "lint": "npm run lint-eslint-config-prettier && npm run lint-prettier && npm run lint-eslint",
+    "lint": "npm run lint-prettier && npm run lint-eslint",
     "test": "jest ./src",
-    "test-e2e": "jest --runInBand ./e2e",
     "test-watch": "npm run test -- --watch --notify",
     "test-coverage": "npm run test -- --coverage",
-    "test-ci": "npm run test-coverage && npm run test-e2e"
+    "test-ci": "npm run test-coverage"
   },
   "husky": {
     "hooks": {
@@ -35,25 +33,26 @@
     "stylelint-find-rules": "src/bin/stylelint-find-rules.js"
   },
   "dependencies": {
-    "bluebird": "3.5.3",
-    "chalk": "2.4.1",
+    "bluebird": "3.7.0",
+    "chalk": "2.4.2",
     "columnify": "1.5.4",
-    "cosmiconfig": "5.0.7",
-    "lodash": "4.17.11",
-    "yargs": "12.0.5"
+    "cosmiconfig": "5.2.1",
+    "lodash": "4.17.15",
+    "yargs": "14.0.0"
   },
   "devDependencies": {
-    "babel-eslint": "8.2.2",
-    "eslint": "4.18.2",
-    "eslint-config-prettier": "6.0.0",
-    "eslint-find-rules": "3.2.1",
-    "eslint-plugin-jest": "21.14.0",
-    "eslint-plugin-lodash": "2.6.1",
-    "eslint-plugin-promise": "3.7.0",
-    "husky": "3.0.1",
-    "jest": "23.6.0",
-    "lint-staged": "9.2.1",
-    "prettier": "1.15.3",
+    "babel-eslint": "10.0.3",
+    "eslint": "6.5.1",
+    "eslint-config-ai": "1.7.0",
+    "eslint-config-prettier": "6.4.0",
+    "eslint-find-rules": "3.4.0",
+    "eslint-plugin-jest": "22.17.0",
+    "eslint-plugin-lodash": "6.0.0",
+    "eslint-plugin-promise": "4.2.1",
+    "husky": "3.0.8",
+    "jest": "24.9.0",
+    "lint-staged": "9.4.1",
+    "prettier": "1.18.2",
     "stylelint": "9.9.0",
     "stylelint-config-recommended": "2.1.0",
     "stylelint-config-standard": "18.2.0"
