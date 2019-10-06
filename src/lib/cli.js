@@ -119,7 +119,7 @@ function printColumns(heading, data) {
 
 /**
  * Check we got everything we need:
- * - stylelint config (by comiconfig)
+ * - stylelint config (by cosmiconfig)
  * - CLI arguments
  */
 function validate(cosmiconfig) {
