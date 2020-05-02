@@ -18,6 +18,6 @@ module.exports = {
   semi: true,
   singleQuote: true, // default: false
   tabWidth: 2,
-  trailingComma: 'none',
-  useTabs: false
+  trailingComma: 'es5', // default: none
+  useTabs: false,
 };

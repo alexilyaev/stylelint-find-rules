@@ -19,13 +19,13 @@ Find [stylelint](https://github.com/stylelint/stylelint) rules that are not conf
 
 Install as a dev dependency of your project:
 
-```
+```shell
 yarn add -D stylelint-find-rules
 ```
 
 Or with `npm`
 
-```
+```shell
 npm i -D stylelint-find-rules
 ```
 
@@ -36,7 +36,7 @@ available rules from that package.
 
 ### npm script
 
-```
+```js
 {
   ...
   "scripts": {
@@ -50,19 +50,19 @@ available rules from that package.
 
 Using `npx`:
 
-```
+```shell
 npx stylelint-find-rules
 ```
 
 Or the old way:
 
-```
+```shell
 ./node_modules/.bin/stylelint-find-rules
 ```
 
 ### Options
 
-```
+```txt
 stylelint-find-rules [options]
 
 General:
@@ -93,7 +93,7 @@ to find your config data, so if stylelint works for you, this should too.
 
 ### Custom config file
 
-```
+```shell
 ./node_modules/.bin/stylelint-find-rules --config my-custom-config.js
 ```
 

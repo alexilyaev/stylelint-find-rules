@@ -17,17 +17,17 @@
     "test-coverage": "npm run test -- --coverage",
     "test-ci": "npm run test-coverage"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.js": [
       "npm run base-eslint -- --fix --max-warnings 0",
       "npm run base-prettier -- --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "bin": {
     "stylelint-find-rules": "src/bin/stylelint-find-rules.js"
