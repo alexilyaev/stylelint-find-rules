@@ -4,7 +4,7 @@ module.exports = {
   extends: [
     'stylelint-config-standard',
     './extends-recommended.config.js',
-    './invalid-rules.config.js'
+    './invalid-rules.config.js',
   ],
 
   rules: {
@@ -29,10 +29,10 @@ module.exports = {
           'after-same-name',
           'inside-block',
           'blockless-after-same-name-blockless',
-          'first-nested'
+          'first-nested',
         ],
-        ignore: ['after-comment']
-      }
+        ignore: ['after-comment'],
+      },
     ],
 
     'at-rule-no-vendor-prefix': true,
@@ -46,8 +46,8 @@ module.exports = {
       'always',
       {
         except: ['first-nested'],
-        ignore: ['after-comment', 'stylelint-commands']
-      }
+        ignore: ['after-comment', 'stylelint-commands'],
+      },
     ],
     'comment-no-empty': true,
     'comment-whitespace-inside': 'always',
@@ -74,8 +74,8 @@ module.exports = {
     'function-url-quotes': [
       'always',
       {
-        except: ['empty']
-      }
+        except: ['empty'],
+      },
     ],
     'function-url-scheme-blacklist': null,
     'function-url-scheme-whitelist': null,
@@ -86,8 +86,8 @@ module.exports = {
       {
         indentInsideParens: 'once-at-root-twice-in-block',
         indentClosingBrace: false,
-        ignore: ['inside-parens']
-      }
+        ignore: ['inside-parens'],
+      },
     ],
     'number-leading-zero': 'always',
     'number-max-precision': null,
@@ -103,8 +103,8 @@ module.exports = {
     'value-keyword-case': [
       'lower',
       {
-        ignoreKeywords: '/\\$.+$/'
-      }
+        ignoreKeywords: '/\\$.+$/',
+      },
     ],
     'value-list-comma-newline-after': 'always-multi-line',
     'value-list-comma-space-after': 'always-single-line',
@@ -126,14 +126,14 @@ module.exports = {
       'always',
       {
         except: ['after-comment', 'after-declaration', 'first-nested'],
-        ignore: ['inside-single-line-block']
-      }
+        ignore: ['inside-single-line-block'],
+      },
     ],
     'declaration-block-no-duplicate-properties': [
       true,
       {
-        ignore: ['consecutive-duplicates-with-different-values']
-      }
+        ignore: ['consecutive-duplicates-with-different-values'],
+      },
     ],
     'declaration-block-no-redundant-longhand-properties': true,
     'declaration-block-no-shorthand-property-overrides': true,
@@ -166,8 +166,8 @@ module.exports = {
     'selector-class-pattern': [
       '^[a-z0-9\\-]+$',
       {
-        message: 'Class names should be dash-cased. Pattern: "^[a-z0-9\\-]+$"'
-      }
+        message: 'Class names should be dash-cased. Pattern: "^[a-z0-9\\-]+$"',
+      },
     ],
     'selector-combinator-blacklist': null,
     'selector-combinator-whitelist': null,
@@ -209,8 +209,8 @@ module.exports = {
       'always',
       {
         except: ['first-nested'],
-        ignore: ['after-comment']
-      }
+        ignore: ['after-comment'],
+      },
     ],
     'media-feature-colon-space-after': 'always',
     'media-feature-colon-space-before': 'never',
@@ -238,6 +238,6 @@ module.exports = {
     'no-invalid-double-slash-comments': true,
     'no-missing-end-of-source-newline': true,
     'no-unknown-animations': true,
-    'keyframe-declaration-no-important': true
-  }
+    'keyframe-declaration-no-important': true,
+  },
 };

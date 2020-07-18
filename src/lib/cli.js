@@ -16,7 +16,7 @@ const rules = {
   stylelintAll: _.keys(stylelint.rules),
   stylelintDeprecated: [],
   stylelintNoDeprecated: [],
-  userRulesNames: []
+  userRulesNames: [],
 };
 
 /**
@@ -32,34 +32,34 @@ const argv = yargs
     alias: 'unused',
     describe: `Find available rules that are not configured
       To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-u')}`,
-    default: true
+    default: true,
   })
   .option('d', {
     type: 'boolean',
     alias: 'deprecated',
     describe: `Find deprecated configured rules
       To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-d')}`,
-    default: true
+    default: true,
   })
   .option('i', {
     type: 'boolean',
     alias: 'invalid',
     describe: `Find configured rules that are no longer available
       To disable, set to ${chalk.blue('false')} or use ${chalk.blue('--no-i')}`,
-    default: true
+    default: true,
   })
   .option('c', {
     type: 'boolean',
     alias: 'current',
-    describe: 'Find all currently configured rules'
+    describe: 'Find all currently configured rules',
   })
   .option('a', {
     type: 'boolean',
     alias: 'available',
-    describe: 'Find all available stylelint rules'
+    describe: 'Find all available stylelint rules',
   })
   .option('config', {
-    describe: 'Optional, path to a custom config file (passed to cosmiconfig)'
+    describe: 'Optional, path to a custom config file (passed to cosmiconfig)',
   })
   .help('h')
   .alias('h', 'help')
@@ -238,7 +238,7 @@ function printUserCurrent() {
   const rulesToPrint = _.map(rules.userRulesNames, rule => {
     return {
       rule,
-      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
+      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`),
     };
   });
 
@@ -259,7 +259,7 @@ function printAllAvailable() {
   const rulesToPrint = _.map(rules.stylelintAll, rule => {
     return {
       rule,
-      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
+      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`),
     };
   });
 
@@ -288,7 +288,7 @@ function printConfiguredUnavailable() {
   );
   const rulesToPrint = _.map(configuredUnavailable, rule => {
     return {
-      rule: chalk.redBright(rule)
+      rule: chalk.redBright(rule),
     };
   });
 
@@ -318,7 +318,7 @@ function printUserDeprecated() {
   const rulesToPrint = _.map(userDeprecated, rule => {
     return {
       rule: chalk.redBright(rule),
-      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
+      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`),
     };
   });
 
@@ -349,7 +349,7 @@ function printUserUnused() {
   const rulesToPrint = _.map(userUnconfigured, rule => {
     return {
       rule,
-      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`)
+      url: chalk.cyan(`https://stylelint.io/user-guide/rules/${rule}/`),
     };
   });
 
